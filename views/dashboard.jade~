@@ -1,0 +1,17 @@
+extends layout
+
+block content
+  div.container-fluid
+    div.col-xs-4
+    div.col-xs-4
+      h1 Client Login
+      form(role="form", method="post", action="/authentication")
+        div.form-group
+          label(for="email") Email address
+          input.form-control(type="email", placeholder="Enter email", name="email")
+        div.form-group
+          label(for="password") Password
+          input.form-control(type="password", placeholder="Password", name="password")
+        button.btn.btn-primary(type="submit") Login
+      if error
+        p Error occured

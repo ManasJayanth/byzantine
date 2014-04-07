@@ -1,0 +1,13 @@
+extends layout
+
+block content
+  h1= Byzantine
+  form(action='/register', method="post")
+    | Email
+    input(type="text", name="email")
+    | Password
+    input(type="password", name="password")
+    | Name
+    input(type="text", name="first")
+    input(type="text", name="last")
+    input(type="submit")
