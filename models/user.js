@@ -13,6 +13,7 @@ var AccountSchema = new mongoose.Schema({
         first:   { type: String },
         last:    { type: String }
     },
+    perms: {type: Array},
     userType: { type: String }
 });
 

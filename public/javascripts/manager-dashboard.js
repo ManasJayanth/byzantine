@@ -45,4 +45,20 @@ function createUser() {
     // render form
     var template = _.template($('#register-user-id').html());
     $('#manager-workspace').html(template);
+    $('#user-creation').bind('submit', function (e) {
+        e.preventDefault();
+        $.post(this.action, $(this).serialize())
+            .done(function () {
+                console.log('user-creation: form data submitted successfully');
+                $('.user-alert').html('<div class="alert alert-success"> ' +
+                                      'User successfully created</div>')
+            })
+            .fail(function () {
+                $('.user-alert').html('<div class="alert alert-danger"> Error occured </div>')
+                console.log('user-creation: error occured while form data' +
+                      'submission');
+            });
+
+        return false;
+    });
 }

@@ -22,7 +22,7 @@ block jsScripts
   script#register-user-id(type="text/template")
     h1 Register
     hr
-    form(role="form", action="/register", method="post")
+    form#user-creation(role="form", action="/register", method="post")
       div.form-group
         label(for="name") User ID
         input.form-control(name="userId", placeholder="User ID")
@@ -66,6 +66,7 @@ block jsScripts
           | Analyse
 
       button.btn.btn-primary(type="submit") Submit
+    div.user-alert
 
   script#delete-user-form(type="text/template")
     form(role="form", action="/delete-user", method="post")

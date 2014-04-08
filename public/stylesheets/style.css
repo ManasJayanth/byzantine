@@ -15,3 +15,6 @@ a {
     display: block;
     margin: auto;
 }
+.user-alert {
+    margin-top: 10px;
+}
