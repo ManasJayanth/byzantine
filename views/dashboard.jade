@@ -1,7 +1,24 @@
 extends layout
 
+
+block headerScripts
+  script(src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0-rc1/jquery.js")
+
 block content
   div.container-fluid
-    div.col-xs-4
-    div.col-xs-4
-      h1 User Dashboard
+    div.row
+      div.col-xs-4
+      div.col-xs-4
+        h1 User Dashboard
+    div.user-options
+      div.row
+        div.col-xs-4
+          img.action(src="/images/file-upload-icon.png")
+        div.col-xs-4
+          img.action(src="/images/file-download-icon.png")
+        div.col-xs-4
+          img.action(src="/images/logs-icon.png")
+
+
+block jsScripts
+  script(src="/javascripts/client-dashboard.js")

@@ -9,3 +9,11 @@ exports.renderSignUpPage = function (req, res) {
 exports.dashboard = function(req, res){
     res.render('dashboard');
 };
+
+exports.managerLogin = function (req, res) {
+    res.render('manager-login');
+};
+
+exports.managerDashboard = function(req, res){
+    res.render('manager-dashboard');
+};
