@@ -28,6 +28,9 @@ exports.authenticate = function (req, res) {
             }
             if (doc) {
                 req.session.loggedIn = true;
+                req.session.userId = doc.userId;
+                req.session.perms = doc.perms;
+                console.log('session contents: ' + JSON.stringify(req.session));
                 res.redirect('/dashboard');
             } else {
                 res.render('index', {error: true});
@@ -80,8 +83,9 @@ exports.deleteUser = function (req, res) {
         if (err) {
             console.log('Error occured:' + err);
             res.send(400);
+            // TODO - mongoose doesnt issue error on invalid delete
         }
         console.log('User successfully deleted');
         res.send(200);
-    })
+    });
 };
