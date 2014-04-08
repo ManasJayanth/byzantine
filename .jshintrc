@@ -1,0 +1,17 @@
+{
+    "eqeqeq": true,
+    "maxlen": 80,
+    "trailing": true,
+    "curly": true,
+    "undef": true,
+    "globals": {
+                 "console": false,
+                 "alert": false,
+                 "$": false,
+                 "window": false
+                },
+    "indent": 4,
+    "camelcase": true,
+    "newcap": true,
+    "node": true
+}
