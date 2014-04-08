@@ -35,6 +35,7 @@ app.post('/authentication', user.authenticate);
 app.post('/manager-authentication', user.authenticateManager);
 app.post('/register', user.register);
 app.get('/dashboard', routes.dashboard);
+app.post('/delete-user', user.deleteUser);
 app.get('/manager-dashboard', routes.managerDashboard);
 app.get('/manager-login', routes.managerLogin);
 

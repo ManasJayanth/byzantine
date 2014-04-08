@@ -25,10 +25,13 @@ block jsScripts
     form#user-creation(role="form", action="/register", method="post")
       div.form-group
         label(for="name") User ID
-        input.form-control(name="userId", placeholder="User ID")
+        input.form-control(name="userId")
+      div.form-group
+        label(for="name") User Password
+        input.form-control(name="password")
       div.form-group
         label(for="first") First Name
-        input.form-control(name="first", placeholder="First Name")
+        input.form-control(name="first")
       div.form-group
         label(for="last") Last Name
         input.form-control(name="last", placeholder="Last Name")
@@ -69,11 +72,12 @@ block jsScripts
     div.user-alert
 
   script#delete-user-form(type="text/template")
-    form(role="form", action="/delete-user", method="post")
+    form#user-deletion(role="form", action="/delete-user", method="post")
       div.form-group
-        label(for="name") User ID
+        label(for="userId") User ID
         input.form-control(name="userId", placeholder="User ID")
       button.btn.btn-primary(type="submit") Submit
-        
+    div.user-alert
+
   script(src="/javascripts/lib/underscore.js")
   script(src="/javascripts/manager-dashboard.js")

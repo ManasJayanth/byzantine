@@ -39,6 +39,23 @@ function deleteUser () {
     var template = _.template($('#delete-user-form').html());
     $('#manager-workspace').html(template);
 
+    $('#user-deletion').bind('submit', function (e) {
+        e.preventDefault();
+        $.post(this.action, $(this).serialize())
+            .done(function () {
+                console.log('user-creation: form data submitted successfully');
+                $('.user-alert').html('<div class="alert alert-success"> ' +
+                                      'User successfully deleted</div>')
+            })
+            .fail(function () {
+                $('.user-alert').html('<div class="alert alert-danger"> ' + 
+                                      'Error occured </div>')
+                console.log('user-creation: error occured while deleting' +
+                            'user');
+            });
+
+        return false;
+    });
 }
 
 function createUser() {    

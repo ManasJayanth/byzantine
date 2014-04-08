@@ -28,7 +28,6 @@ exports.authenticate = function (req, res) {
             }
             if (doc) {
                 req.session.loggedIn = true;
-                //console.log('Successfully logged in');
                 res.redirect('/dashboard');
             } else {
                 res.render('index', {error: true});
@@ -37,7 +36,6 @@ exports.authenticate = function (req, res) {
 };
 
 exports.authenticateManager = function (req, res) {
-//    console.log('form data: ');
     Account.findOne({userId: req.body.userId, password: req.body.password,
         userType: 'manager'}, function(err,doc) {
             if(err) {
@@ -77,17 +75,13 @@ exports.register = function (req, res)  {
     res.send(200);
 };
 
-// Account.findOne({userId: 'admin', password: 'admin',
-//         userType: 'manager'}, function(err,doc) {
-//             if(err) {
-//                 throw new Error('Error occured: ' + err);
-//             }
-//             if (doc) {
-//                 console.log(JSON.stringify(doc))
-//                 // req.session.loggedIn = true;
-//                 // res.redirect('/manager-dashboard');
-//             } else {
-//                 console.log('no doc found');
-// //                res.render('manager-login', {error: true});
-//             }
-//         });
+exports.deleteUser = function (req, res) {
+    Account.remove({userId: req.body.userId}, function (err) {
+        if (err) {
+            console.log('Error occured:' + err);
+            res.send(400);
+        }
+        console.log('User successfully deleted');
+        res.send(200);
+    })
+};
