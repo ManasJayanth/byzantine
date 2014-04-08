@@ -36,7 +36,7 @@ exports.authenticate = function (req, res) {
 };
 
 exports.authenticateManager = function (req, res) {
-    console.log(req.body.userId);
+//    console.log('form data: ');
     Account.findOne({userId: req.body.userId, password: req.body.password,
         userType: 'manager'}, function(err,doc) {
             if(err) {
@@ -46,7 +46,8 @@ exports.authenticateManager = function (req, res) {
                 req.session.loggedIn = true;
                 res.redirect('/manager-dashboard');
             } else {
-                res.render('index', {error: true});
+                console.log('no doc found');
+                res.render('manager-login', {error: true});
             }
         });
 };
@@ -68,8 +69,24 @@ exports.register = function (req, res)  {
         perms: req.body.perms, // [upload, download, analyse]
         userType: 'client'
     });
-    user.save(function () {
+    user.save(function (d) {
         console.log('saved');
+        console.log(JSON.stringify(d));
     });
     res.send(200);
 };
+
+// Account.findOne({userId: 'admin', password: 'admin',
+//         userType: 'manager'}, function(err,doc) {
+//             if(err) {
+//                 throw new Error('Error occured: ' + err);
+//             }
+//             if (doc) {
+//                 console.log(JSON.stringify(doc))
+//                 // req.session.loggedIn = true;
+//                 // res.redirect('/manager-dashboard');
+//             } else {
+//                 console.log('no doc found');
+// //                res.render('manager-login', {error: true});
+//             }
+//         });

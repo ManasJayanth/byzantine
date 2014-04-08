@@ -34,8 +34,8 @@ module.exports = function(grunt) {
                 tasks: ['jshint'],
                 options: {
                     spawn: false,
-                },
-            },
+                }
+            }
         }
     });
 
