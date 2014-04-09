@@ -39,7 +39,7 @@ app.post('/user-request', routes.userRequest);
 app.post('/delete-user', user.deleteUser);
 app.get('/manager-dashboard', routes.managerDashboard);
 app.get('/manager-login', routes.managerLogin);
-
+app.post('/file-upload', routes.fileUpload);
 http.createServer(app).listen(app.get('port'), function(){
     console.log('Express server listening on port ' + app.get('port'));
 });

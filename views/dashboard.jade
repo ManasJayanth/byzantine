@@ -9,17 +9,37 @@ block content
       div.col-xs-4
       div.col-xs-4
         h1#container-h1 User Dashboard
-    div.user-options
-      div.row
-        div.col-xs-4
-          img.action#req-upload(src="/images/file-upload-icon.png")
-        div.col-xs-4
-          img.action#req-download(src="/images/file-download-icon.png")
-        div.col-xs-4
-          img.action#req-analyse(src="/images/logs-icon.png")
-      div.row
-        div.user-alert
+    div.row
+      div#client-workspace
 
+
+  script#main-template(type='text/template')
+    div.row
+      div.col-xs-4
+        img.action#req-upload(src="/images/file-upload-icon.png")
+      div.col-xs-4
+        img.action#req-download(src="/images/file-download-icon.png")
+      div.col-xs-4
+        img.action#req-analyse(src="/images/logs-icon.png")
+    div.row
+      div.user-alert
+
+  script#upload-template(type='text/template')
+    div.row
+      div.col-xs-4
+      div.col-xs-4
+        form.form-horizontal(role="form", action="/file-upload",
+          method="post", enctype="multipart/form-data")
+          div.form-group
+            label.col-xs-4(for="inputFile")
+            div.col-xs-8
+              input(type="file", name="inputFile")
+          button.col-xs-12.btn.btn-default(type="submit") Upload file
+
+  script#download-template(type='text/template')
+    | download coming soon
+  script#analyse-template(type='text/template')
+    | analyse coming soon.
 
 block jsScripts
   script(src="/javascripts/lib/jquery.js")
