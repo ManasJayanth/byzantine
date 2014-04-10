@@ -1,11 +1,12 @@
 var fs = require('fs'),
-    nstatic = require('node-static');
+    nstatic = require('node-static'),
+    usersLoggedIn = require('../models/user').loggedInUsers;
 
 
 exports.index = function(req, res){
     if (req.session.loggedIn) {
         var files = fs.readdirSync(__dirname + '/../user-files/');
-        res.render('dashboard', {files: files});
+        res.render('dashboard', {files: files, users: usersLoggedIn});
     } else {
         res.render('index', {error: false});
     }
@@ -18,7 +19,7 @@ exports.renderSignUpPage = function (req, res) {
 exports.dashboard = function(req, res){
     if (req.session.loggedIn) {
         var files = fs.readdirSync(__dirname + '/../user-files/');
-        res.render('dashboard', {files: files});
+        res.render('dashboard', {files: files, users: usersLoggedIn});
     } else {
         res.redirect('/');
     }

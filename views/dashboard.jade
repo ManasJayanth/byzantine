@@ -56,7 +56,20 @@ block content
           
 
   script#analyse-template(type='text/template')
-    | analyse coming soon.
+    div.row
+      div.col-xs-12
+        h2 Users logged In
+    div.row
+      div.col-xs-12
+        table.table.table-striped
+          tr
+            th User ID
+            th Time of Log In
+          each user in users
+            tr
+              td= user.id
+              td= user.time
+
 
 block jsScripts
   script(src="/javascripts/lib/jquery.js")

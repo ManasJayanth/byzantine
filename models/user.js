@@ -29,7 +29,11 @@ exports.authenticate = function (req, res) {
                 req.session.loggedIn = true;
                 req.session.userId = doc.userId;
                 req.session.perms = doc.perms;
-                console.log('session contents: ' + JSON.stringify(req.session));
+                exports.loggedInUsers.push({
+                    id: doc.userId,
+                    time: new Date().toUTCString()
+                });
+
                 res.redirect('/dashboard');
             } else {
                 res.render('index', {error: true});
@@ -111,5 +115,8 @@ exports.createAdmin = function () {
             console.log('Manager admin created');
             console.log(JSON.stringify(d));
         }
-    });    
+    });
 };
+
+exports.noOfUsers = 0;
+exports.loggedInUsers = [];
