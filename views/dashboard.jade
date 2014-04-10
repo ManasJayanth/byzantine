@@ -39,7 +39,22 @@ block content
       div.user-alert
 
   script#download-template(type='text/template')
-    | download coming soon
+    div.row
+      div.col-xs-12
+        h2 Downloadable files
+    div.row
+      div.col-xs-12
+        table.table.table-striped
+          tr
+            th File
+            th Download link
+          each file in files
+            tr
+              td= file
+              td
+                a.btn(href="file-download/" + file) Download
+          
+
   script#analyse-template(type='text/template')
     | analyse coming soon.
 

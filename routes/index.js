@@ -1,4 +1,6 @@
-var fs = require('fs');
+var fs = require('fs'),
+    nstatic = require('node-static');
+
 
 exports.index = function(req, res){
     res.render('index', {error: false});
@@ -10,7 +12,8 @@ exports.renderSignUpPage = function (req, res) {
 
 exports.dashboard = function(req, res){
     if (req.session.loggedIn) {
-        res.render('dashboard');
+        var files = fs.readdirSync(__dirname + '/../user-files/');
+        res.render('dashboard', {files: files});
     } else {
         res.redirect('/');
     }
@@ -56,4 +59,10 @@ exports.fileUpload = function (req, res) {
             }
         });
     });
+};
+
+exports.fileDownload = function (req, res) {
+    var filename = req.params.filename;
+    var fileServer = new nstatic.Server('./user-files');
+    fileServer.serveFile(filename, 200, {}, req, res);
 };
