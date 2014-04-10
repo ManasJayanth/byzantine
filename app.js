@@ -19,6 +19,7 @@ app.use(express.logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded());
 app.use(express.methodOverride());
+app.use(express.bodyParser());
 app.use( express.cookieParser() );
 app.use(express.session({secret: '1234567890QWERTY'}));
 app.use(app.router);
@@ -39,7 +40,7 @@ app.post('/user-request', routes.userRequest);
 app.post('/delete-user', user.deleteUser);
 app.get('/manager-dashboard', routes.managerDashboard);
 app.get('/manager-login', routes.managerLogin);
-
+app.post('/file-upload', routes.fileUpload);
 http.createServer(app).listen(app.get('port'), function(){
     console.log('Express server listening on port ' + app.get('port'));
 });

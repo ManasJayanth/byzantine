@@ -1,3 +1,5 @@
+var fs = require('fs');
+
 exports.index = function(req, res){
     res.render('index', {error: false});
 };
@@ -35,4 +37,23 @@ exports.userRequest = function (req, res) {
         console.log('Legal operation');
         res.send(200);
     }
+};
+
+exports.fileUpload = function (req, res) {
+    var uploadedFileName = req.files.inputFile.name;
+    fs.readFile(req.files.inputFile.path, function (err, data) {
+        if (err) {
+            console.log('Error occured while file upload: ' + err);
+            res.send(400);
+        }
+        var newPath = __dirname + "/../user-files/" + uploadedFileName;
+        fs.writeFile(newPath, data, function (err) {
+            if (err) {
+                console.log(err);
+                res.send(400);
+            } else {
+                res.render('file-upload-ok');
+            }
+        });
+    });
 };
