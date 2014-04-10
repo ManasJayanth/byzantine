@@ -52,7 +52,7 @@ exports.fileUpload = function (req, res) {
                 console.log(err);
                 res.send(400);
             } else {
-                res.send(200);
+                res.render('file-upload-ok');
             }
         });
     });

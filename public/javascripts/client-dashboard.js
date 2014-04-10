@@ -7,19 +7,17 @@ $(document).ready(function () {
         renderUI('main');
     });
 
-//     // TODO - form validation - empty filenames must be handled
-//     $('#file-upload').submit(function() { 
-//         // submit the form 
-//         $(this).ajaxSubmit({
-//             url: this.action+ 'q',
-//             success:    function() { 
-//                 console.log('Thanks for your comment!'); 
-//             }
-//         }); 
-//         // return false to prevent normal browser submit and page navigation 
-// //        alert('trying to return false');
-//         return true; 
-//     });
+    // TODO - form validation - empty filenames must be handled
+    $(document).on('submit', '#file-upload', function (e) {
+        $(this).ajaxSubmit({
+            target: '.user-alert',
+            url: this.action,
+            success:    function() { 
+                
+            }
+        }); 
+        return false; 
+    });
 
     // $(document).on('submit', '#file-upload', function (e) {
     //     e.preventDefault();

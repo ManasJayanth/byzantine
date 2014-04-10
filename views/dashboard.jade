@@ -35,6 +35,7 @@ block content
             div.col-xs-8
               input(type="file", name="inputFile")
           button.col-xs-12.btn.btn-default(type="submit") Upload file
+    div.row
       div.user-alert
 
   script#download-template(type='text/template')
@@ -44,4 +45,5 @@ block content
 
 block jsScripts
   script(src="/javascripts/lib/jquery.js")
+  script(src="/javascripts/lib/jquery.form.js")
   script(src="/javascripts/client-dashboard.js")
