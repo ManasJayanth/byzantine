@@ -20,7 +20,6 @@ var AccountSchema = new mongoose.Schema({
 var Account = mongoose.model('Account', AccountSchema);
 
 exports.authenticate = function (req, res) {
-    console.log(req.body.userId);
     Account.findOne({userId: req.body.userId, password: req.body.password},
         function(err,doc) {
             if(err) {
