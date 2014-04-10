@@ -3,7 +3,12 @@ var fs = require('fs'),
 
 
 exports.index = function(req, res){
-    res.render('index', {error: false});
+    if (req.session.loggedIn) {
+        var files = fs.readdirSync(__dirname + '/../user-files/');
+        res.render('dashboard', {files: files});
+    } else {
+        res.render('index', {error: false});
+    }
 };
 
 exports.renderSignUpPage = function (req, res) {
