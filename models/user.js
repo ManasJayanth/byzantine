@@ -55,7 +55,6 @@ exports.authenticateManager = function (req, res) {
 };
 
 exports.register = function (req, res)  {
-
     var user = new Account({
         userId: req.body.userId,
         password: req.body.password,
@@ -88,4 +87,30 @@ exports.deleteUser = function (req, res) {
         console.log('User successfully deleted');
         res.send(200);
     });
+};
+
+exports.createAdmin = function () {
+    var user = new Account({
+        userId: 'admin',
+        password: 'admin',
+        name: {
+            first: 'Rohit',
+            last: 'GS'
+        },
+        age: 22,
+        gender: 'male',
+        address: 'Bangalore',
+        phone: '',
+        department: 'ISE',
+        perms: ['upload', 'download', 'analyse'], //[upload, download, analyse]
+        userType: 'manager'
+    });
+    user.save(function (err, d) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log('Manager admin created');
+            console.log(JSON.stringify(d));
+        }
+    });    
 };
