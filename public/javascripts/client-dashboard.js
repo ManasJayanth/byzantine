@@ -59,9 +59,15 @@ function userAction (selection) {
         $('.user-alert').html('<div class="alert alert-success"> ' +
                                       'Operation allowed </div>')
     })
-    .fail(function () {
-        $('.user-alert').html('<div class="alert alert-danger"> ' +
-                                      'Illegal operation</div>')
+    .fail(function (response) {
+        if (response.responseText === 'blocked') {
+            $('.user-alert').html('<div class="alert alert-danger"> ' +
+                                  'You have exceeded the limit. Your account ' +
+                                  'has been scheduled for deletion </div>')
+        } else {
+            $('.user-alert').html('<div class="alert alert-danger"> ' +
+                                  'Illegal operation</div>')
+        }
     });
 }
 

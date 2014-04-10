@@ -83,13 +83,7 @@ exports.register = function (req, res)  {
 };
 
 function delUser(req, res) {
-    var id;
-    if (typeof req === 'object') {
-        id = req.body.userId;
-    } else {
-        id = req;
-    }
-    Account.remove({userId: id}, function (err) {
+    Account.remove({userId: req.body.userId}, function (err) {
         if (err) {
             console.log('Error occured:' + err);
             res.send(400);
@@ -129,13 +123,11 @@ exports.createAdmin = function () {
 };
 
 
-function logout (req, res) {
+exports.logout = function (req, res) {
     req.session = {};
     res.session.loggedIn = false;
     res.redirect('/');
-}
-
-exports.logout = logout;
+};
 
 exports.userRequest = function (req, res) {
     var userOp = req.body.reqType.substring(4);
@@ -143,9 +135,18 @@ exports.userRequest = function (req, res) {
         console.log('Fradulent operation');
         ++exports.fraudCount;
         if (exports.fraudCount > FRAUD_LIMIT) {
-            delUser(req, res);
             console.log('Fradulent access limit exceeded');
-            res.redirect('/fraud-deletion');
+            Account.remove({userId: req.session.userId}, function (err) {
+                if (err) {
+                    console.log('Error occured:' + err);
+                    res.send(400);
+                    // TODO - mongoose doesnt issue error on invalid delete
+                }
+                console.log('User successfully deleted');
+                req.session.loggedIn = false;
+                res.send(400, 'blocked');
+            });
+            
         } else {
             res.send(400);
         }
@@ -155,10 +156,6 @@ exports.userRequest = function (req, res) {
     }
 };
 
-exports.fraudDeletion = function (req, res) {
-    logout(req, res);
-    res.render('fraud-deletion');
-};
 exports.noOfUsers = 0;
 exports.loggedInUsers = [];
 exports.fraudCount = 0;

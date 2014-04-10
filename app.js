@@ -42,7 +42,6 @@ app.get('/manager-dashboard', routes.managerDashboard);
 app.get('/manager-login', routes.managerLogin);
 app.post('/file-upload', routes.fileUpload);
 app.get('/file-download/:filename', routes.fileDownload);
-app.get('/fraud-deletion', user.fraudDeletion);
 app.post('/logout', user.logout);
 http.createServer(app).listen(app.get('port'), function(){
     console.log('Express server listening on port ' + app.get('port'));
