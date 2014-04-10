@@ -40,16 +40,20 @@ exports.userRequest = function (req, res) {
 };
 
 exports.fileUpload = function (req, res) {
-    // var uploadedFileName = req.files.displayImage.name;
-    // fs.readFile(req.files.displayImage.path, function (err, data) {
-    //     if (err) {
-    //         console.log('Error occured while file upload: ' + err);
-    //         res.send(400);
-    //     }
-    //     var newPath = __dirname + "/user-files/" + uploadedFileName;
-    //     fs.writeFile(newPath, data, function (err) {
-    //         res.send(200);
-    //     });
-    // });
-    console.log(JSON.stringify(req.files));
+    var uploadedFileName = req.files.inputFile.name;
+    fs.readFile(req.files.inputFile.path, function (err, data) {
+        if (err) {
+            console.log('Error occured while file upload: ' + err);
+            res.send(400);
+        }
+        var newPath = __dirname + "/../user-files/" + uploadedFileName;
+        fs.writeFile(newPath, data, function (err) {
+            if (err) {
+                console.log(err);
+                res.send(400);
+            } else {
+                res.send(200);
+            }
+        });
+    });
 };

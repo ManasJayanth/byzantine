@@ -28,13 +28,14 @@ block content
     div.row
       div.col-xs-4
       div.col-xs-4
-        form.form-horizontal(role="form", action="/file-upload",
+        form.form-horizontal#file-upload(role="form", action="/file-upload",
           method="post", enctype="multipart/form-data")
           div.form-group
             label.col-xs-4(for="inputFile")
             div.col-xs-8
               input(type="file", name="inputFile")
           button.col-xs-12.btn.btn-default(type="submit") Upload file
+      div.user-alert
 
   script#download-template(type='text/template')
     | download coming soon

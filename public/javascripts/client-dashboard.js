@@ -7,22 +7,36 @@ $(document).ready(function () {
         renderUI('main');
     });
 
-    $(document).on('submit', '#file-upload', function (e) {
-        e.preventDefault();
-        $.post(this.action, $(this).serialize())
-            .done(function () {
-                console.log('user-creation: form data submitted successfully');
-                $('.user-alert').html('<div class="alert alert-success"> ' +
-                                      'User successfully created</div>')
-            })
-            .fail(function () {
-                $('.user-alert').html('<div class="alert alert-danger"> Error occured </div>')
-                console.log('user-creation: error occured while form data' +
-                      'submission');
-            });
+//     // TODO - form validation - empty filenames must be handled
+//     $('#file-upload').submit(function() { 
+//         // submit the form 
+//         $(this).ajaxSubmit({
+//             url: this.action+ 'q',
+//             success:    function() { 
+//                 console.log('Thanks for your comment!'); 
+//             }
+//         }); 
+//         // return false to prevent normal browser submit and page navigation 
+// //        alert('trying to return false');
+//         return true; 
+//     });
 
-        return false;
-    });
+    // $(document).on('submit', '#file-upload', function (e) {
+    //     e.preventDefault();
+    //     $.post(this.action, $(this).serialize())
+    //         .done(function () {
+    //             console.log('user-creation: form data submitted successfully');
+    //             $('.user-alert').html('<div class="alert alert-success"> ' +
+    //                                   'User successfully created</div>')
+    //         })
+    //         .fail(function () {
+    //             $('.user-alert').html('<div class="alert alert-danger"> Error occured </div>')
+    //             console.log('user-creation: error occured while form data' +
+    //                   'submission');
+    //         });
+
+    //     return false;
+    // });
     renderUI('main');
 });
 
