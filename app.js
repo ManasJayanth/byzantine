@@ -36,13 +36,14 @@ app.post('/authentication', user.authenticate);
 app.post('/manager-authentication', user.authenticateManager);
 app.post('/register', user.register);
 app.get('/dashboard', routes.dashboard);
-app.post('/user-request', routes.userRequest);
+app.post('/user-request', user.userRequest);
 app.post('/delete-user', user.deleteUser);
 app.get('/manager-dashboard', routes.managerDashboard);
 app.get('/manager-login', routes.managerLogin);
 app.post('/file-upload', routes.fileUpload);
 app.get('/file-download/:filename', routes.fileDownload);
-
+app.get('/fraud-deletion', user.fraudDeletion);
+app.post('/logout', user.logout);
 http.createServer(app).listen(app.get('port'), function(){
     console.log('Express server listening on port ' + app.get('port'));
 });

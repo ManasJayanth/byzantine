@@ -37,17 +37,6 @@ exports.managerDashboard = function(req, res){
     }
 };
 
-exports.userRequest = function (req, res) {
-    var userOp = req.body.reqType.substring(4);
-    if (req.session.perms.indexOf(userOp) === -1) {
-        console.log('Fradulent operation');
-        res.send(400);
-    } else {
-        console.log('Legal operation');
-        res.send(200);
-    }
-};
-
 exports.fileUpload = function (req, res) {
     var uploadedFileName = req.files.inputFile.name;
     fs.readFile(req.files.inputFile.path, function (err, data) {
