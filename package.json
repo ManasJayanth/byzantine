@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node app.js",
-    "postinstall": "node post-install.js"
+    "postinstall": "node post-install.js || mkdir user-files"
   },
   "dependencies": {
     "express": "3.4.8",
