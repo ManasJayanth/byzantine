@@ -32,6 +32,8 @@ function menuClicked (item) {
 
 function fraudulentLogs () {
     console.log('fraud');
+    var template = _.template($('#user-logs').html());
+    $('#manager-workspace').html(template);
 }
 
 function deleteUser () {

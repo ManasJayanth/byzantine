@@ -1,11 +1,14 @@
 var fs = require('fs'),
     nstatic = require('node-static'),
-    usersLoggedIn = require('../models/user').loggedInUsers;
+    users = require('../models/user');
 
+var usersLoggedIn = users.loggedInUsers,
+    logs = users.logs;
 
 exports.index = function(req, res){
     if (req.session.loggedIn) {
         var files = fs.readdirSync(__dirname + '/../user-files/');
+        console.log(usersLoggedIn);
         res.render('dashboard', {files: files, users: usersLoggedIn});
     } else {
         res.render('index', {error: false});
@@ -31,7 +34,7 @@ exports.managerLogin = function (req, res) {
 
 exports.managerDashboard = function(req, res){
     if (req.session.loggedIn) {
-        res.render('manager-dashboard');
+        res.render('manager-dashboard', {logs: logs});
     } else {
         res.redirect('/');
     }

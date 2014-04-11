@@ -79,5 +79,29 @@ block jsScripts
       button.btn.btn-primary(type="submit") Submit
     div.user-alert
 
+  script#user-logs(type='text/template')
+    div.row
+      div.col-xs-12
+        h2 Logs
+    div.row
+      div.col-xs-12
+        table.table.table-striped
+          tr
+            th Log Message
+            th Time
+          each log in logs
+            if log.type == 'blocked'
+              tr.danger
+                td= log.message
+                td= log.time
+            else if log.type == 'fraud'
+              tr.warning
+                td= log.message
+                td= log.time
+            else
+              tr
+                td= log.message
+                td= log.time
+
   script(src="/javascripts/lib/underscore.js")
   script(src="/javascripts/manager-dashboard.js")

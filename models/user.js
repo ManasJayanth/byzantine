@@ -35,7 +35,11 @@ exports.authenticate = function (req, res) {
                     id: doc.userId,
                     time: new Date().toUTCString()
                 });
-
+                exports.logs.push({
+                    message: 'UID ' + req.session.userId + ' has logged in',
+                    type: 'normal',
+                    time: new Date().toUTCString()
+                });
                 res.redirect('/dashboard');
             } else {
                 res.render('index', {error: true});
@@ -126,6 +130,11 @@ exports.createAdmin = function () {
 exports.logout = function (req, res) {
     req.session = {};
     res.session.loggedIn = false;
+    exports.logs.push({
+        message: 'UID ' + req.session.userId + ' has logged out',
+        type: 'normal',
+        time: new Date().toUTCString()
+    });
     res.redirect('/');
 };
 
@@ -133,9 +142,19 @@ exports.userRequest = function (req, res) {
     var userOp = req.body.reqType.substring(4);
     if (req.session.perms.indexOf(userOp) === -1) {
         console.log('Fradulent operation');
+
+        // Checking if no if illegal ops has been exceeeded
         ++exports.fraudCount;
         if (exports.fraudCount > FRAUD_LIMIT) {
             console.log('Fradulent access limit exceeded');
+
+            // Logging
+            exports.logs.push({
+                message: 'UID ' + req.session.userId + ' has been blocked',
+                type: 'blocked',
+                time: new Date().toUTCString()
+            });
+
             Account.remove({userId: req.session.userId}, function (err) {
                 if (err) {
                     console.log('Error occured:' + err);
@@ -148,10 +167,25 @@ exports.userRequest = function (req, res) {
             });
             
         } else {
+            // Logging
+            exports.logs.push({
+                message: 'UID ' + req.session.userId + ' has made a fraudulent ' +
+                    'access (' + userOp + ')',
+                type: 'fraud',
+                time: new Date().toUTCString()
+            });
+
             res.send(400);
         }
     } else {
         console.log('Legal operation');
+        // Logging
+        exports.logs.push({
+            message: 'UID ' + req.session.userId + ' ran ' + userOp +
+                ' operation',
+            type: 'normal',
+            time: new Date().toUTCString()
+        });
         res.send(200);
     }
 };
@@ -159,3 +193,4 @@ exports.userRequest = function (req, res) {
 exports.noOfUsers = 0;
 exports.loggedInUsers = [];
 exports.fraudCount = 0;
+exports.logs = [];
