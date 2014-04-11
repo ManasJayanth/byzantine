@@ -19,22 +19,6 @@ $(document).ready(function () {
         return false; 
     });
 
-    // $(document).on('submit', '#file-upload', function (e) {
-    //     e.preventDefault();
-    //     $.post(this.action, $(this).serialize())
-    //         .done(function () {
-    //             console.log('user-creation: form data submitted successfully');
-    //             $('.user-alert').html('<div class="alert alert-success"> ' +
-    //                                   'User successfully created</div>')
-    //         })
-    //         .fail(function () {
-    //             $('.user-alert').html('<div class="alert alert-danger"> Error occured </div>')
-    //             console.log('user-creation: error occured while form data' +
-    //                   'submission');
-    //         });
-
-    //     return false;
-    // });
     renderUI('main');
 });
 
