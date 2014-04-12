@@ -128,8 +128,7 @@ exports.createAdmin = function () {
 
 
 exports.logout = function (req, res) {
-    req.session = {};
-    res.session.loggedIn = false;
+    req.session.loggedIn = false;
     exports.logs.push({
         message: 'UID ' + req.session.userId + ' has logged out',
         type: 'normal',

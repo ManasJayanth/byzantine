@@ -7,8 +7,12 @@ block content
   div.container-fluid
     div.row
       div.col-xs-4
-      div.col-xs-4
         h1#container-h1 User Dashboard
+      div.col-xs-4
+      div.col-xs-4
+          form(action="/logout", method="post")
+            button(type="submit") Log Out
+          
     div.row
       div#client-workspace
 

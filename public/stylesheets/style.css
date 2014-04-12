@@ -20,5 +20,10 @@ a {
 }
 
 #container-h1 {
-    text-align: center;
+    /* text-align: left; */
+    float:left;
+}
+
+.container-fluid button {
+    float: right;
 }
