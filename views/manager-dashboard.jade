@@ -6,16 +6,24 @@ block headerScripts
 
 block content
   div.container-fluid
-    div.col-xs-3.sidebar
-      ul.nav.nav-pills.nav-stacked
-        li.active
-          a#create-user(href="#") Create user
-        li
-          a#delete-user(href="#") Delete user
-        li
-          a#fraud-logs(href="#") Fraud Logs
+    div.row
+      div.col-xs-4
+        h1#container-h1 User Dashboard
+      div.col-xs-4
+      div.col-xs-4
+          form(action="/logout", method="post")
+            button(type="submit") Log Out
+    div.row
+      div.col-xs-3.sidebar
+        ul.nav.nav-pills.nav-stacked
+          li.active
+            a#create-user(href="#") Create user
+          li
+            a#delete-user(href="#") Delete user
+          li
+            a#fraud-logs(href="#") Fraud Logs
 
-    div.col-xs-9#manager-workspace
+      div.col-xs-9#manager-workspace
       
     
 block jsScripts
