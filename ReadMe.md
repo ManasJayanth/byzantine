@@ -14,3 +14,10 @@ Run the mongo server
 Run the node.js server
 
     node app.js
+
+## Deploying to heroku
+Run the following
+
+    bash deploy.bash
+
+Replace the mongolabs link with an appropriate link
