@@ -1,6 +1,6 @@
 git checkout heroku-branch
 
-git merge master -m "Deployment changes"
+git pull heroku master -m "Deployment changes"
 
 sed -i -e 's/mongodb:\/\/localhost\/byzantine/mongodb:\/\/rohit:rohit@ds045297.mongolab.com:45297\/byzantine/g' models/user.js
 
