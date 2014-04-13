@@ -21,3 +21,12 @@ Run the following
     bash deploy.bash
 
 Replace the mongolabs link with an appropriate link
+
+## Post InstallationR
+Run post install script to add admin record to database (TODO: more robust post installation script required)
+
+    node post-install
+
+Make directory for users uploaded files
+
+    mkdir user-files
