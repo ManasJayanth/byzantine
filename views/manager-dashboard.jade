@@ -97,19 +97,23 @@ block jsScripts
           tr
             th Log Message
             th Time
+            th IP Address
           each log in logs
             if log.type == 'blocked'
               tr.danger
                 td= log.message
                 td= log.time
+                td= log.ip
             else if log.type == 'fraud'
               tr.warning
                 td= log.message
                 td= log.time
+                td= log.ip
             else
               tr
                 td= log.message
                 td= log.time
+                td= log.ip
 
   script(src="/javascripts/lib/underscore.js")
   script(src="/javascripts/manager-dashboard.js")

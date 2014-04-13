@@ -38,7 +38,8 @@ exports.authenticate = function (req, res) {
                 exports.logs.push({
                     message: 'UID ' + req.session.userId + ' has logged in',
                     type: 'normal',
-                    time: new Date().toUTCString()
+                    time: new Date().toUTCString(),
+                    ip: req.connection.remoteAddress
                 });
                 res.redirect('/dashboard');
             } else {
@@ -132,16 +133,17 @@ exports.logout = function (req, res) {
     exports.logs.push({
         message: 'UID ' + req.session.userId + ' has logged out',
         type: 'normal',
-        time: new Date().toUTCString()
+        time: new Date().toUTCString(),
+        ip: req.connection.remoteAddress
     });
     res.redirect('/');
 };
 
 exports.userRequest = function (req, res) {
+
     var userOp = req.body.reqType.substring(4);
     if (req.session.perms.indexOf(userOp) === -1) {
         console.log('Fradulent operation');
-
         // Checking if no if illegal ops has been exceeeded
         ++exports.fraudCount;
         if (exports.fraudCount > FRAUD_LIMIT) {
@@ -151,7 +153,8 @@ exports.userRequest = function (req, res) {
             exports.logs.push({
                 message: 'UID ' + req.session.userId + ' has been blocked',
                 type: 'blocked',
-                time: new Date().toUTCString()
+                time: new Date().toUTCString(),
+                ip: req.connection.remoteAddress
             });
 
             Account.remove({userId: req.session.userId}, function (err) {
@@ -171,7 +174,8 @@ exports.userRequest = function (req, res) {
                 message: 'UID ' + req.session.userId + ' has made a fraudulent ' +
                     'access (' + userOp + ')',
                 type: 'fraud',
-                time: new Date().toUTCString()
+                time: new Date().toUTCString(),
+                ip: req.connection.remoteAddress
             });
 
             res.send(400);
@@ -183,7 +187,8 @@ exports.userRequest = function (req, res) {
             message: 'UID ' + req.session.userId + ' ran ' + userOp +
                 ' operation',
             type: 'normal',
-            time: new Date().toUTCString()
+            time: new Date().toUTCString(),
+            ip: req.connection.remoteAddress
         });
         res.send(200);
     }
