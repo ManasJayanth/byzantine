@@ -4,7 +4,8 @@ var rsa = require('./rsa');
 
 client.setEncoding('utf8');
 
-function handleData (key) {
+function handleData (dataString) {
+    var encData
     console.log('Received key: ' + key);
     console.log('Encrypting...');
     var str = "diamondhead";
@@ -12,6 +13,7 @@ function handleData (key) {
     console.log(data);
     client.write(data);
 }
+
 // connect to server
 client.connect ('8124','localhost', function () {
     console.log('connected to server');
