@@ -1,22 +1,25 @@
-var net = require('net');
-var clients = [];
-var rsa = require('./rsa');
+var tls = require('tls');
+var fs = require('fs');
 
-function handleData (data) {
-    // console.log(data + ' from ' + conn.remoteAddress + ' ' +
-    //             conn.remotePort);
-    console.log('Decrypting..');
-    var encrypted = data.toString(),
-        key =  rsa.getPrivateKey();
-    var decryptedText = rsa.process(encrypted, key);
-    console.log("Received text:" + decryptedText);
-}
-var server = net.createServer(function(conn) {
-    console.log('Connected - sending pubilc key');
-    conn.write(rsa.getPublicKey().toString());
-    conn.on('data', handleData);
-    conn.on('close', function() {
-        console.log('client closed connection');
-    });
-}).listen(8124);
-console.log('listening on port 8124');
+var options = {
+  key: fs.readFileSync('server-keys/server-key.pem'),
+  cert: fs.readFileSync('server-keys/server-cert.pem'),
+
+  // This is necessary only if using the client certificate authentication.
+ requestCert: true,
+
+  // This is necessary only if the client uses the self-signed certificate.
+ ca: [ fs.readFileSync('client-keys/client-cert.pem') ]
+};
+
+var server = tls.createServer(options, function(cleartextStream) {
+  console.log('server connected',
+              cleartextStream.authorized ? 'authorized' : 'unauthorized');
+    console.log(cleartextStream.getPeerCertificate());
+  cleartextStream.write("welcome!\n");
+  cleartextStream.setEncoding('utf8');
+  cleartextStream.pipe(cleartextStream);
+});
+server.listen(8000, function() {
+  console.log('server bound');
+});

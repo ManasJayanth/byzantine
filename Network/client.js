@@ -1,28 +1,22 @@
-var net = require('net');
-var client = new net.Socket();
-var rsa = require('./rsa');
+var tls = require('tls'),
+    fs = require('fs');
 
-client.setEncoding('utf8');
+var options = {
+    key: fs.readFileSync('client-keys/client-key.pem'),
+    cert: fs.readFileSync('client-keys/client-cert.pem'),
+    rejectUnauthorized: true,
+    ca: [ fs.readFileSync('server-keys/server-cert.pem') ]
+};
 
-function handleData (dataString) {
-    var encData
-    console.log('Received key: ' + key);
-    console.log('Encrypting...');
-    var str = "diamondhead";
-    data = rsa.process(str, parseInt(key));
-    console.log(data);
-    client.write(data);
-}
-
-// connect to server
-client.connect ('8124','localhost', function () {
-    console.log('connected to server');
+var conn = tls.connect(8000, '127.0.0.1', options, function() {
+  if (conn.authorized) {
+    console.log("Connection authorized by a Certificate Authority.");
+  } else {
+    console.log("Connection not authorized: " + conn.authorizationError)
+  }
 });
 
-// when receive data back, print to console 
-client.on('data', handleData);
-
-// when server closed 
-client.on('close',function() {
-    console.log('connection is closed');
+conn.on("data", function (data) {
+  console.log(data.toString());
+  conn.end();
 });
