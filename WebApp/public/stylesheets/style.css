@@ -1,0 +1,29 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+#client-workspace {
+    margin-top: 100px;
+}
+
+#client-workspace img {
+    display: block;
+    margin: auto;
+}
+.user-alert {
+    margin-top: 10px;
+}
+
+#container-h1 {
+    /* text-align: left; */
+    float:left;
+}
+
+.container-fluid button {
+    float: right;
+}

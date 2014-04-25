@@ -1,0 +1,119 @@
+extends layout
+
+
+block headerScripts
+
+
+block content
+  div.container-fluid
+    div.row
+      div.col-xs-4
+        h1#container-h1 User Dashboard
+      div.col-xs-4
+      div.col-xs-4
+          form(action="/logout", method="post")
+            button(type="submit") Log Out
+    div.row
+      div.col-xs-3.sidebar
+        ul.nav.nav-pills.nav-stacked
+          li.active
+            a#create-user(href="#") Create user
+          li
+            a#delete-user(href="#") Delete user
+          li
+            a#fraud-logs(href="#") Fraud Logs
+
+      div.col-xs-9#manager-workspace
+      
+    
+block jsScripts
+  script#register-user-id(type="text/template")
+    h1 Register
+    hr
+    form#user-creation(role="form", action="/register", method="post")
+      div.form-group
+        label(for="name") User ID
+        input.form-control(name="userId")
+      div.form-group
+        label(for="name") User Password
+        input.form-control(name="password")
+      div.form-group
+        label(for="first") First Name
+        input.form-control(name="first")
+      div.form-group
+        label(for="last") Last Name
+        input.form-control(name="last", placeholder="Last Name")
+      div.form-group
+        label(for="age") Age
+        input.form-control(placeholder="Age", name="age")
+      div.radio
+        label
+          input(type="radio", name="gender", value="male", checked="checked")
+          | Male
+      div.radio
+        label
+          input(type="radio", name="gender", value="female", checked="checked")
+          | Female
+      div.form-group
+        label(for="address") Address
+        input.form-control(placeholder="Address", name="address")
+      div.form-group
+        label(for="phone") Phone
+        input.form-control(placeholder="Phone", name="phone")
+      div.form-group
+        label(for="department") Department
+        input.form-control(placeholder="Department", name="department")
+      div.checkbox
+        label
+          input(type="checkbox", name="perms", value="upload")
+          | Upload
+      div.checkbox
+        label
+          input(type="checkbox", name="perms", value="download")
+          | Download
+      div.checkbox
+        label
+          input(type="checkbox", name="perms", value="analyse")
+          | Analyse
+
+      button.btn.btn-primary(type="submit") Submit
+    div.user-alert
+
+  script#delete-user-form(type="text/template")
+    form#user-deletion(role="form", action="/delete-user", method="post")
+      div.form-group
+        label(for="userId") User ID
+        input.form-control(name="userId", placeholder="User ID")
+      button.btn.btn-primary(type="submit") Submit
+    div.user-alert
+
+  script#user-logs(type='text/template')
+    div.row
+      div.col-xs-12
+        h2 Logs
+    div.row
+      div.col-xs-12
+        table.table.table-striped
+          tr
+            th Log Message
+            th Time
+            th IP Address
+          each log in logs
+            if log.type == 'blocked'
+              tr.danger
+                td= log.message
+                td= log.time
+                td= log.ip
+            else if log.type == 'fraud'
+              tr.warning
+                td= log.message
+                td= log.time
+                td= log.ip
+            else
+              tr
+                td= log.message
+                td= log.time
+                td= log.ip
+
+  script(src="/javascripts/lib/underscore.js")
+  script(src="/javascripts/manager-dashboard.js")
