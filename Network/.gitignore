@@ -1,3 +1,4 @@
 *.pem
 server-keys
 client-keys
+node-webkit.app
