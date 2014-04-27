@@ -9,14 +9,14 @@ var options = {
 };
 
 var conn = tls.connect(8000, '127.0.0.1', options, function() {
-  if (conn.authorized) {
-    console.log("Connection authorized by a Certificate Authority.");
-  } else {
-    console.log("Connection not authorized: " + conn.authorizationError)
-  }
+    if (conn.authorized) {
+        console.log("Connection authorized by a Certificate Authority.");
+        conn.write(JSON.stringify({name: 'admin', password: 'admin', type: 'auth'}));
+    } else {
+        console.log("Connection not authorized: " + conn.authorizationError)
+    }
 });
 
 conn.on("data", function (data) {
-  console.log(data.toString());
-  conn.end();
+    console.log(data.toString());
 });
