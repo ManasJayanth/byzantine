@@ -2,7 +2,7 @@
     "name": "Byzantine-Fault-Tolerance",
     "version": "0.0.1",
     "description": "Enhanced Byzantine Fault Tolerance with membership service",
-    "repository": "https://github.com/prometheansacrifice/byzantine"
+    "repository": "https://github.com/prometheansacrifice/byzantine",
     "dependencies": {
         "mongoose": "*"
     },
