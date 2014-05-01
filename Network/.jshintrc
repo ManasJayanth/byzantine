@@ -8,6 +8,7 @@
                  "console": false,
                  "alert": false,
                  "$": false,
+                 "_": false,
                  "window": false
                 },
     "indent": 4,
