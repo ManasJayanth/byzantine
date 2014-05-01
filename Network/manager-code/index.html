@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="lib/bootstrap.css">
+  </head>
+  <body>
+    <div id="id" class="container-fluid">
+    </div>
+    <script src="lib/jquery.js"></script>
+    <script src="lib/underscore.js"></script>
+    <script src="client-code.js"></script>
+
+    <script id="login-template" type="text/template">
+      <h1> Client Login </h1>
+      <hr />
+      <form role="form">
+        <div class="form-group">
+          <label for="userId">User ID</label>
+          <input id="userId" name="userId" class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input id="password" type="password" placeholder="Password" name="password" class="form-control">
+        </div>
+        <button type="button" class="btn btn-primary" id="client-login-submit">Login</button>
+      </form>
+    </script>
+
+  </body>
+</html>
