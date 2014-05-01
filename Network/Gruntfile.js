@@ -28,10 +28,35 @@ module.exports = function(grunt) {
             }
         },
 
+        compress: {
+            client: {
+                options: {
+                    mode: 'zip',
+                    archive: 'nw-builds/client.nw'
+                },
+                files: [{
+                    expand: true,
+                    cwd: 'client-code/',
+                    src: ['**']
+                }]
+            },
+            manager: {
+                options: {
+                    mode: 'zip',
+                    archive: 'nw-builds/manager.nw'
+                },
+                files: [{
+                    expand: true,
+                    cwd: 'client-code/',
+                    src: ['**']
+                }]
+            }
+        },
+
         watch: {
             scripts: {
                 files: files,
-                tasks: ['jshint'],
+                tasks: ['jshint', 'compress'],
                 options: {
                     spawn: false,
                 }
@@ -43,12 +68,13 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-shell');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-contrib-compress');
 
     // Install pre-commit hooks
     grunt.registerTask('hookmeup', ['clean:hooks', 'shell:hooks']);
 
     //build task
-    grunt.registerTask('build', ['hookmeup']);
+    grunt.registerTask('build', ['compress']);
 
     grunt.event.on('watch', function(action, filepath) {
         grunt.log.writeln(filepath + ' has ' + action);

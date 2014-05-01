@@ -13,9 +13,10 @@ function handleData (buf, stream) {
                 console.log('awesome');
                 stream.write('success');
             },
-                              function () {
-                                  stream.write('error');
-                              });
+           function () {
+               console.log('fuck!');
+               stream.write('error');
+           });
             break;
         }
     }
@@ -38,13 +39,8 @@ var server = tls.createServer(options, function(cleartextStream) {
     cleartextStream.write("welcome!\n");
 
 
-    var data = '';
     cleartextStream.on('data', function (chunk) {
-        data += chunk;
-        handleData(data, cleartextStream);
-    });
-    cleartextStream.on('end', function () {
-        handleData(data, cleartextStream);
+        handleData(chunk, cleartextStream);
     });
     cleartextStream.setEncoding('utf8');
     cleartextStream.pipe(cleartextStream);
