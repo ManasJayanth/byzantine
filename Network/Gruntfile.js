@@ -1,5 +1,5 @@
-var files = ['Gruntfile.js', 'client-code/*.js', '!client-code/lib/*',
-             'server-code/*.js'];
+var filesToBeLinted = ['Gruntfile.js', 'client-code/*.js',
+             '!client-code/lib/*', 'server-code/*'];
 module.exports = function(grunt) {
 
     'use strict';
@@ -12,7 +12,7 @@ module.exports = function(grunt) {
             options: {
                 jshintrc:true
             },
-            all: files
+            all: filesToBeLinted
         },
         
         clean: {
@@ -55,7 +55,7 @@ module.exports = function(grunt) {
 
         watch: {
             scripts: {
-                files: files,
+                files: filesToBeLinted.concat(['client-code/*.html']),
                 tasks: ['jshint', 'compress'],
                 options: {
                     spawn: false,
