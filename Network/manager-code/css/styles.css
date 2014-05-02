@@ -1,0 +1,29 @@
+header {
+    padding: 0.5% 2% 0.5% 2%;
+    background-color: #232323;
+    color: #82B440;
+    width: 100%;
+    font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+}
+
+header div.pull-left {
+    line-height: 1.75em;
+    font-size: 1.5em;
+}
+
+header div.pull-right {
+    margin-top: 0.375em;
+    line-height: 1.75em;
+    font-size: 1em;
+}
+
+body {
+    background-color: #D4D4D4;
+}
+#admin-ops {
+    margin-top: 5%;
+}
+.operation h1 {
+    text-align: center;
+    font-size: 2em;
+}

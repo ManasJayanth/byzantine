@@ -1,30 +1,74 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <link rel="stylesheet" href="lib/bootstrap.css">
+    <link rel="stylesheet" href="lib/bootstrap.css" />
+    <link rel="stylesheet" href="css/styles.css" />
   </head>
   <body>
-    <div id="id" class="container-fluid">
-    </div>
-    <script src="lib/jquery.js"></script>
-    <script src="lib/underscore.js"></script>
-    <script src="manager-code.js"></script>
-
-    <script id="login-template" type="text/template">
-      <h1> Manager Login </h1>
-      <hr />
-      <form role="form">
-        <div class="form-group">
-          <label for="userId">User ID</label>
-          <input id="userId" name="userId" class="form-control">
-        </div>
-        <div class="form-group">
-          <label for="password">Password</label>
-          <input id="password" type="password" placeholder="Password" name="password" class="form-control">
-        </div>
-        <button type="button" class="btn btn-primary" id="manager-login-submit">Login</button>
-      </form>
-    </script>
-
   </body>
+
+  <!-- Templates -->
+  <script id="login-template" type="text/template">
+    <h1> Manager Login </h1>
+    <hr />
+    <form role="form">
+      <div class="form-group">
+        <label for="userId">User ID</label>
+        <input id="userId" name="userId" class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input id="password" type="password" placeholder="Password"
+               name="password" class="form-control">
+      </div>
+      <button type="button" class="btn btn-primary" id="manager-login-submit">
+        Login
+      </button>
+    </form>
+  </script>
+
+  <script id="dashboard-template" type="text/template">
+    <header class="pull-left">
+      <div class="pull-left">
+        Dashboard
+      </div>
+      <div class="pull-right">
+        Sign Out
+      </div>
+    </header>
+
+    <div id="container-id" class="container-fluid">
+      <div id="admin-ops" class="col-xs-12">
+        <div class="row">
+          <div class="col-xs-3 operation">
+            <img class="img-responsive" src="images/new-user.png" />
+            <h1> New User </h1>
+          </div>
+          <div class="col-xs-3 operation">
+            <img class="img-responsive" src="images/delete-user.png" />
+            <h1> Delete User </h1>
+          </div>
+          <div class="col-xs-3 operation">
+            <img class="img-responsive" src="images/fraud-list.png" />
+            <h1> Fraud list </h1>
+          </div>
+          <div class="col-xs-3 operation">
+            <img class="img-responsive" src="images/list-user.png" />
+            <h1> User List </h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  </script>
+
+  <!-- Scripts -->
+  <script src="lib/jquery.js"></script>
+  <script src="lib/underscore.js"></script>
+  <!-- <script src="manager-code.js"></script> -->
+  <script>
+    //Testing
+    var dashboardTemplate = $('#dashboard-template').html();
+    $('body').html(dashboardTemplate);
+  </script>
+
 </html>
