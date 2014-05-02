@@ -22,7 +22,11 @@ var AccountSchema = new mongoose.Schema({
 var Account = mongoose.model('Account', AccountSchema);
 
 exports.authenticate = function (id, password, succCallback, errCallback) {
-    Account.findOne({userId: id, password: password},
+    var crypto = require('crypto');
+    var shaSum = crypto.createHash('sha256');
+    shaSum.update(password);
+    var hashedPassword = shaSum.digest('hex');
+    Account.findOne({userId: id, password: hashedPassword},
         function(err,doc) {
             if(err) {
                 throw new Error('Error occured: ' + err);
@@ -45,22 +49,6 @@ exports.authenticate = function (id, password, succCallback, errCallback) {
                 succCallback();
             } else {
                 errCallback();
-            }
-        });
-};
-
-exports.authenticateManager = function (req, res) {
-    Account.findOne({userId: req.body.userId, password: req.body.password,
-        userType: 'manager'}, function(err,doc) {
-            if(err) {
-                throw new Error('Error occured: ' + err);
-            }
-            if (doc) {
-                req.session.loggedIn = true;
-                res.redirect('/manager-dashboard');
-            } else {
-                console.log('no doc found');
-                res.render('manager-login', {error: true});
             }
         });
 };
@@ -103,9 +91,14 @@ function delUser(req, res) {
 exports.deleteUser = delUser;
 
 exports.createAdmin = function () {
+    var crypto = require('crypto');
+    var shaSum = crypto.createHash('sha256');
+    shaSum.update('admin');
+    var hashedPassword = shaSum.digest('hex');
+    
     var user = new Account({
         userId: 'admin',
-        password: 'admin',
+        password: hashedPassword,
         name: {
             first: 'Rohit',
             last: 'GS'
