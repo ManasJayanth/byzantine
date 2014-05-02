@@ -12,11 +12,11 @@ function handleData (buf, stream) {
             case 'auth':
             user.authenticate(req.name, req.password, function () {
                 console.log('awesome');
-                stream.write('success');
+                //stream.write('success');
             },
             function () {
-                console.log('fuck!');
-                stream.write('error');
+                console.log('error');
+                //stream.write('error');
             });
             break;
             
@@ -41,7 +41,9 @@ var options = {
 var server = tls.createServer(options, function(cleartextStream) {
     console.log('server connected',
                 cleartextStream.authorized ? 'authorized' : 'unauthorized');
-    cleartextStream.write("welcome!\n");
+    cleartextStream.write(JSON.stringify({
+        type: "welcome"
+    }));
 
 
     cleartextStream.on('data', function (chunk) {
