@@ -1,7 +1,7 @@
 var FRAUD_LIMIT = 3;
 
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/byzantine');
+mongoose.connect('mongodb://localhost/byzantine-web');
 
 var AccountSchema = new mongoose.Schema({
     userId:     { type: String, unique: true },
