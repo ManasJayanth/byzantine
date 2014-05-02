@@ -12,7 +12,9 @@ function handleData (buf, stream) {
             case 'auth':
             user.authenticate(req.name, req.password, function () {
                 console.log('awesome');
-                //stream.write('success');
+                stream.write(JSON.stringify({
+                    type: 'loginSuccess'
+                }));
             },
             function () {
                 console.log('error');
@@ -41,10 +43,6 @@ var options = {
 var server = tls.createServer(options, function(cleartextStream) {
     console.log('server connected',
                 cleartextStream.authorized ? 'authorized' : 'unauthorized');
-    cleartextStream.write(JSON.stringify({
-        type: "welcome"
-    }));
-
 
     cleartextStream.on('data', function (chunk) {
         handleData(chunk, cleartextStream);

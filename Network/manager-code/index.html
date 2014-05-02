@@ -5,26 +5,29 @@
     <link rel="stylesheet" href="css/styles.css" />
   </head>
   <body>
+    <div id="body-container"></div>
   </body>
 
   <!-- Templates -->
   <script id="login-template" type="text/template">
-    <h1> Manager Login </h1>
-    <hr />
-    <form role="form">
-      <div class="form-group">
-        <label for="userId">User ID</label>
-        <input id="userId" name="userId" class="form-control">
-      </div>
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input id="password" type="password" placeholder="Password"
-               name="password" class="form-control">
-      </div>
-      <button type="button" class="btn btn-primary" id="manager-login-submit">
-        Login
-      </button>
-    </form>
+    <div id="workspace" class="container-fluid">
+      <h1> Manager Login </h1>
+      <hr />
+      <form role="form">
+        <div class="form-group">
+          <label for="userId">User ID</label>
+          <input id="userId" name="userId" class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input id="password" type="password" placeholder="Password"
+                 name="password" class="form-control">
+        </div>
+        <button type="button" class="btn btn-primary" id="manager-login-submit">
+          Login
+        </button>
+      </form>
+    </div>
   </script>
 
   <script id="dashboard-template" type="text/template">
@@ -37,23 +40,23 @@
       </div>
     </header>
 
-    <div id="container-id" class="container-fluid">
+    <div id="workspace" class="container-fluid">
       <div id="admin-ops" class="col-xs-12">
         <div class="row">
           <div class="col-xs-3 operation">
-            <img class="img-responsive" src="images/new-user.png" />
+            <img class="img-responsive" src="images/new-user.png" data-op="new-user"/>
             <h1> New User </h1>
           </div>
           <div class="col-xs-3 operation">
-            <img class="img-responsive" src="images/delete-user.png" />
-            <h1> Delete User </h1>
+            <img class="img-responsive" src="images/edit-user.png" data-op="edit-user"/>
+            <h1> Edit User </h1>
           </div>
           <div class="col-xs-3 operation">
-            <img class="img-responsive" src="images/fraud-list.png" />
+            <img class="img-responsive" src="images/fraud-list.png"  data-op="fraud-list"/>
             <h1> Fraud list </h1>
           </div>
           <div class="col-xs-3 operation">
-            <img class="img-responsive" src="images/list-user.png" />
+            <img class="img-responsive" src="images/list-user.png"  data-op="user-list"/>
             <h1> User List </h1>
           </div>
         </div>
@@ -61,14 +64,88 @@
     </div>
   </script>
 
+  <script id="new-user-template" type="text/template">
+    <h1>Register</h1>
+    <hr />
+    <form role="form" id="user-creation">
+      <div class="form-group">
+        <label for="name">User ID</label>
+        <input class="form-control" name="userId">
+      </div>
+      <div class="form-group">
+        <label for="name">User Password</label>
+        <input class="form-control" name="password">
+      </div>
+      <div class="form-group">
+        <label for="first">First Name</label>
+        <input class="form-control" name="first">
+      </div>
+      <div class="form-group">
+        <label for="last">Last Name</label>
+        <input class="form-control" name="last">
+      </div>
+      <div class="form-group">
+        <label for="age">Age</label>
+        <input class="form-control" name="age">
+      </div>
+      <div class="radio">
+        <label>
+          <input type="radio" checked="checked" value="male" name="gender">Male</label>
+      </div>
+      <div class="radio">
+        <label>
+          <input type="radio" checked="checked" value="female" name="gender">Female</label>
+      </div>
+      <div class="form-group">
+        <label for="address">Address</label>
+        <input class="form-control" name="address">
+      </div>
+      <div class="form-group">
+        <label for="phone">Phone</label>
+        <input class="form-control" name="phone">
+      </div>
+      <div class="form-group">
+        <label for="department">Department</label>
+        <input class="form-control" name="department">
+      </div>
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" value="upload" name="perms">Upload</label>
+      </div>
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" value="download" name="perms">Download</label>
+      </div>
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" value="analyse" name="perms">Analyse</label>
+      </div>
+      <button class="btn btn-primary" type="submit">Submit</button>
+    </form>
+    <div class="user-alert"></div>
+  </script>
+  <script id="edit-user-template" type="text/template">
+    <h1> Edit User </h1>
+    <hr />
+    <form method="post" action="/delete-user" role="form" id="user-deletion">
+      <div class="form-group">
+        <label for="userId">User ID</label>
+        <input class="form-control" placeholder="User ID" name="userId">
+      </div>
+      <button class="btn btn-primary" type="submit">Submit</button>
+    </form>
+    <div class="user-alert"></div>
+  </script>
+  <script id="fraud-list-template" type="text/template">
+    Coming soon...fraud list
+  </script>
+  <script id="user-list-template" type="text/template">
+    Coming soon...user list
+  </script>
+
   <!-- Scripts -->
   <script src="lib/jquery.js"></script>
   <script src="lib/underscore.js"></script>
-  <!-- <script src="manager-code.js"></script> -->
-  <script>
-    //Testing
-    var dashboardTemplate = $('#dashboard-template').html();
-    $('body').html(dashboardTemplate);
-  </script>
+  <script src="manager-code.js"></script>
 
 </html>

@@ -9,19 +9,33 @@ function handleData (buf) {
         console.log('Invalid request');
     } else {
         switch (res.type) {
-        case 'loginSucess':
+        case 'loginSuccess':
             displayDashboard();
             break;
-            
+
         default:
-            console.log('Unknown request type');
+            console.log('Unknown request type: ' + res.type);
             break;
         }
     }
 }
 
 function displayDashboard () {
-    
+    var dashboardTemplate = $('#dashboard-template').html();
+    $('#body-container').html(dashboardTemplate);
+
+    $('.operation img').on('click', function () {
+        var operationTemplate = $('#' + $(this).attr('data-op') +
+                                  '-template').html();
+        $('#workspace').html(operationTemplate);
+    });
+
+    $('#workspace form').on('submit',function (event) {
+        event.preventDefault();
+        console.log( $( this ).serialize() );
+    });
+
+
 }
 
 
@@ -36,7 +50,7 @@ var conn = tls.connect(8000, '127.0.0.1', options, function() {
     if (conn.authorized) {
         userLogin();
     } else {
-        $('body').html("Connection not authorized: " +
+        $('#body-container').html("Connection not authorized: " +
                                 conn.authorizationError);
     }
 });
@@ -49,7 +63,7 @@ conn.on("data", function (data) {
 function userLogin () {
     console.log('Connection authorized by a Certificate Authority.');
     var loginTemplate = $('#login-template').html();
-    $('body').html(loginTemplate);
+    $('#body-container').html(loginTemplate);
 
     //--- UI Event ---//
     $('#manager-login-submit').on('click', function () {
