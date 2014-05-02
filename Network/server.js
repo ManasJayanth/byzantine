@@ -3,6 +3,7 @@ var fs = require('fs');
 var user = require('./user-model');
 
 function handleData (buf, stream) {
+
     var req = JSON.parse(buf.toString());
     if(typeof req.type === 'undefined') {
         console.log('Invalid request');
@@ -13,10 +14,14 @@ function handleData (buf, stream) {
                 console.log('awesome');
                 stream.write('success');
             },
-           function () {
-               console.log('fuck!');
-               stream.write('error');
-           });
+            function () {
+                console.log('fuck!');
+                stream.write('error');
+            });
+            break;
+            
+            default:
+            console.log('Unknown request type');
             break;
         }
     }

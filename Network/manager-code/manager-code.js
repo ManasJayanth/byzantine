@@ -28,7 +28,7 @@ function userLogin () {
     $('#id').html(loginTemplate);
 
     //--- UI Event ---//
-    $('#client-login-submit').on('click', function () {
+    $('#manager-login-submit').on('click', function () {
         // conn.write(JSON.stringify({
         //     name: 'admin',
         //     password: 'admin',
