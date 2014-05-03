@@ -21,7 +21,7 @@ function handleData (buf, stream) {
             });
             break;
 
-        case 'userDetails':
+        case 'newUserDetails':
             user.register(req.data, function () {
                 stream.write(JSON.stringify({
                     type: 'registrationSuccess'
@@ -29,21 +29,24 @@ function handleData (buf, stream) {
             });
             break;
             
-        case 'editUser':
-            user.edit(req.data,
+        case 'searchUser':
+            user.search(req.data,
                 function (doc) {
-                    console.log(doc);
                     stream.write(JSON.stringify({
-                        type: 'editUserResults',
+                        type: 'searchUserResults',
                         data: doc
                     }));
                 },
                 function () {
                     stream.write(JSON.stringify({
-                        type: 'editUserResults',
+                        type: 'searchUserResults',
                         data: 'none'
                     }));
                 });
+            break;
+
+        case 'editUserDetails':
+            user.edit(req.data);
             break;
 
         default:

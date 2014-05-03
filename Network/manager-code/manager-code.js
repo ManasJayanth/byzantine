@@ -40,7 +40,7 @@ function handleData (buf) {
             successfulRegistration();
             break;
 
-        case 'editUserResults':
+        case 'searchUserResults':
             processUserResults(res.data);
             break;
 
@@ -84,9 +84,64 @@ function displayDashboard () {
 
     $(document).on('click', '#new-user-submit', sendUserDetails);
     $(document).on('click', '#user-id-submit', sendUserID);
+    $(document).on('click', '#edit-user-submit', editUserDetails);
 }
 
 function sendUserDetails (event) {
+    event.preventDefault();
+    var formDataSerialized = $( this ).parent().serialize().split('&'),
+        formObject = {};
+    formDataSerialized.forEach(function (d) {
+        var field = d.split('=');
+        
+        switch (typeof formObject[field[0]]) {
+        case 'undefined':
+            formObject[field[0]] = field[1];
+            break;
+        case 'string':
+            var val = formObject[field[0]];
+            formObject[field[0]] = [];
+            formObject[field[0]].push(val);
+            formObject[field[0]].push(field[1]);
+            break;
+        case 'array':
+            formObject[field[0]].push(field[1]);
+            break;
+        }
+    });
+    var request = {
+        type: 'newUserDetails',
+        data: formObject
+    };
+    conn.write(JSON.stringify(request));
+}
+
+function successfulRegistration () {
+    var regSuccessTemplate = $('#reg-success-template').html();
+    $('#workspace').html(regSuccessTemplate);
+}
+
+function sendUserID (event) {
+    event.preventDefault();
+    var request = {
+        type: 'searchUser',
+        data: $('#userID-search').val()
+    };
+    conn.write(JSON.stringify(request));
+}
+
+function processUserResults (data) {
+    if (typeof data === 'string' && data === 'none') {
+        var template = $('#empty-results-template').html();
+        $('#edit-user-results-space').html(template);
+    } else {
+        var placeholderTemplate = $('#edit-user-results-template').html();
+        var compiledTemplate = _.template(placeholderTemplate, data);
+        $('#edit-user-results-space').html(compiledTemplate);
+    }
+}
+
+function editUserDetails (event) {
     event.preventDefault();
     var formDataSerialized = $( this ).parent().serialize().split('&'),
         formObject = {};
@@ -110,33 +165,8 @@ function sendUserDetails (event) {
         }
     });
     var request = {
-        type: 'userDetails',
+        type: 'editUserDetails',
         data: formObject
     };
     conn.write(JSON.stringify(request));
-}
-
-function successfulRegistration () {
-    var regSuccessTemplate = $('#reg-success-template').html();
-    $('#workspace').html(regSuccessTemplate);
-}
-
-function sendUserID (event) {
-    event.preventDefault();
-    var request = {
-        type: 'editUser',
-        data: $('#userID-search').val()
-    };
-    conn.write(JSON.stringify(request));
-}
-
-function processUserResults (data) {
-    if (typeof data === 'string' && data === 'none') {
-        var template = $('#empty-results-template').html();
-        $('#edit-user-results-space').html(template);
-    } else {
-        var placeholderTemplate = $('#edit-user-results-template').html();
-        var compiledTemplate = _.template(placeholderTemplate, data);
-        $('#edit-user-results-space').html(compiledTemplate);
-    }
 }

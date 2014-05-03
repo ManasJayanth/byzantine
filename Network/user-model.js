@@ -79,6 +79,7 @@ exports.register = function (userData, callbackSuccess)  {
     });
 };
 
+exports.edit = function () {};
 function delUser(id) {
     Account.remove({userId: id}, function (err) {
         if (err) {
@@ -90,7 +91,7 @@ function delUser(id) {
 
 exports.deleteUser = delUser;
 
-exports.edit = function (id, succCallback, errCallback) {
+exports.search = function (id, succCallback, errCallback) {
     Account.findOne({userId: id},
         function(err, doc) {
             if(err) {
