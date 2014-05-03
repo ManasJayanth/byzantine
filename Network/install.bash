@@ -65,9 +65,16 @@ echo "Back to project root"
 cd ../
 echo "Installing npm dependencies"
 sudo npm install
+
+echo "Creating data folder for database"
 mkdir data
+
+echo "Creating keys for server and client"
 bash create-server-keys.bash
 bash create-client-keys.bash
+
+echo "Creating config file for manager-code"
+echo "{ \"path\": \"$(pwd)\" }" > manager-code/config.json
 ##  node, npm install, tmux, curl, brew, grunt-cli, libnss3-tools
 
 
