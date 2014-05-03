@@ -1,6 +1,6 @@
 var tls = require('tls'),
     fs = require('fs'),
-dir = require('./config').path + '/Network';
+    dir = require('./config').path;
 
 function handleData (buf) {
 
