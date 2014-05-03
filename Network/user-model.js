@@ -79,7 +79,26 @@ exports.register = function (userData, callbackSuccess)  {
     });
 };
 
-exports.edit = function () {};
+exports.edit = function (userData, succCallback, errCallback)  {
+    Account.findOne({userId: userData.id},
+        function(err,doc) {
+            if(err) {
+                throw new Error('Error occured: ' + err);
+            }
+            if (doc) {
+                console.log('found');
+                cloneObj(doc, userData);
+                doc.name.first = userData.first;
+                doc.name.last = userData.last;
+                doc.save (function () {
+                    succCallback(doc);
+                });
+            } else {
+                errCallback();
+            }
+        });
+};
+
 function delUser(id) {
     Account.remove({userId: id}, function (err) {
         if (err) {
@@ -175,3 +194,24 @@ exports.noOfUsers = 0;
 exports.loggedInUsers = [];
 exports.fraudCount = 0;
 exports.logs = [];
+
+function cloneObj (dest, src) {
+    for (key in src) {
+        switch (typeof src[key]) {
+        case 'array':
+            dest[key] = src[key].slice(0);
+            break;
+
+        case 'object':
+            if (typeof dest[key] === 'undefined') {
+                dest[key] = {};
+            }
+            cloneObj(dest[key], src[key]);
+            break;
+
+        default:
+            dest[key] = src[key];
+            break;
+        }
+    }
+}

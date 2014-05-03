@@ -145,7 +145,6 @@ function editUserDetails (event) {
     event.preventDefault();
     var formDataSerialized = $( this ).parent().serialize().split('&'),
         formObject = {};
-    console.log(formDataSerialized);
     formDataSerialized.forEach(function (d) {
         var field = d.split('=');
         
@@ -159,7 +158,7 @@ function editUserDetails (event) {
             formObject[field[0]].push(val);
             formObject[field[0]].push(field[1]);
             break;
-        case 'array':
+        case 'object':
             formObject[field[0]].push(field[1]);
             break;
         }

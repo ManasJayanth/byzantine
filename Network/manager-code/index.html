@@ -147,11 +147,14 @@
 
   <script id="edit-user-results-template" type="text/template">
     <hr />
+    <p>
+      User ID <%= userId %> found!
+    <p>
     <form role="form">
-      <div class="form-group">
-        <label for="id">User ID</label>
-        <input class="form-control" name="id" value="<%= userId %>">
-      </div>
+      
+      <!-- Hidden input field userID -->
+      <input name="id" value="<%= userId %>" type="hidden">
+      
       <div class="form-group">
         <label for="first">First Name</label>
         <input class="form-control" name="first" value="<%= name.first %>">

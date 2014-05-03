@@ -46,7 +46,14 @@ function handleData (buf, stream) {
             break;
 
         case 'editUserDetails':
-            user.edit(req.data);
+            user.edit(req.data,
+                function (doc) {
+                    console.log('Updated doc: ');
+                    console.log(doc);
+                },
+                function () {
+                    console.log("User cannot be updated");
+                });
             break;
 
         default:
