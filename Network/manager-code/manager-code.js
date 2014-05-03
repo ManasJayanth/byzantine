@@ -2,8 +2,31 @@ var tls = require('tls'),
     fs = require('fs'),
     dir = require('./config').path;
 
-function handleData (buf) {
+var options = {
+    key: fs.readFileSync(dir + '/client-keys/client-key.pem'),
+    cert: fs.readFileSync(dir + '/client-keys/client-cert.pem'),
+    rejectUnauthorized: true,
+    ca: [ fs.readFileSync(dir + '/server-keys/server-cert.pem') ]
+};
 
+var conn = tls.connect(8000, '127.0.0.1', options, function() {
+    if (conn.authorized) {
+//        userLogin();
+        displayDashboard();
+        
+    } else {
+        $('#body-container').html("Connection not authorized: " +
+                                conn.authorizationError);
+    }
+});
+
+conn.on("data", function (data) {
+    handleData(data);
+});
+
+
+/* UI */
+function handleData (buf) {
     var res = JSON.parse(buf.toString());
     if(typeof res.type === 'undefined') {
         console.log('Invalid request');
@@ -30,35 +53,36 @@ function displayDashboard () {
         $('#workspace').html(operationTemplate);
     });
 
-    $('#workspace form').on('submit',function (event) {
+    $(document).on('click', '#new-user-submit', function (event) {
         event.preventDefault();
-        console.log( $( this ).serialize() );
+        var formDataSerialized = $( this ).parent().serialize().split('&'),
+            formObject = {};
+        console.log(formDataSerialized);
+        formDataSerialized.forEach(function (d) {
+            var field = d.split('=');
+            
+            switch (typeof formObject[field[0]]) {
+            case 'undefined':
+                formObject[field[0]] = field[1];
+                break;
+            case 'string':
+                var val = formObject[field[0]];
+                formObject[field[0]] = [];
+                formObject[field[0]].push(val);
+                formObject[field[0]].push(field[1]);
+                break;
+            case 'array':
+                formObject[field[0]].push(field[1]);
+                break;
+            }
+        });
+        var request = {
+            type: 'userDetails',
+            data: formObject
+        };
+        conn.write(JSON.stringify(request));
     });
-
-
 }
-
-
-var options = {
-    key: fs.readFileSync(dir + '/client-keys/client-key.pem'),
-    cert: fs.readFileSync(dir + '/client-keys/client-cert.pem'),
-    rejectUnauthorized: true,
-    ca: [ fs.readFileSync(dir + '/server-keys/server-cert.pem') ]
-};
-
-var conn = tls.connect(8000, '127.0.0.1', options, function() {
-    if (conn.authorized) {
-        userLogin();
-    } else {
-        $('#body-container').html("Connection not authorized: " +
-                                conn.authorizationError);
-    }
-});
-
-conn.on("data", function (data) {
-    handleData(data);
-});
-
 
 function userLogin () {
     console.log('Connection authorized by a Certificate Authority.');
@@ -80,3 +104,4 @@ function userLogin () {
         }));
     });
 }
+

@@ -53,27 +53,31 @@ exports.authenticate = function (id, password, succCallback, errCallback) {
         });
 };
 
-exports.register = function (req, res)  {
+exports.register = function (userData)  {
+    var crypto = require('crypto');
+    var shaSum = crypto.createHash('sha256');
+    shaSum.update(userData.password);
+    var hashedPassword = shaSum.digest('hex');
+
     var user = new Account({
-        userId: req.body.userId,
-        password: req.body.password,
+        userId: userData.id,
+        password: hashedPassword,
         name: {
-            first: req.body.first,
-            last: req.body.last
+            first: userData.first,
+            last: userData.last
         },
-        age: req.body.age,
-        gender: req.body.gender,
-        address: req.body.address,
-        phone: req.body.phone,
-        department: req.body.department,
-        perms: req.body.perms, // [upload, download, analyse]
-        userType: 'client'
+        age: userData.age,
+        gender: userData.gender,
+        address: userData.address,
+        phone: userData.phone,
+        department: userData.department,
+        perms: userData.perms // [upload, download, analyse]
     });
+
     user.save(function (d) {
         console.log('saved');
         console.log(JSON.stringify(d));
     });
-    res.send(200);
 };
 
 function delUser(req, res) {

@@ -41,7 +41,7 @@
     </header>
 
     <div id="workspace" class="container-fluid">
-      <div id="admin-ops" class="col-xs-12">
+       <div id="admin-ops" class="col-xs-12">
         <div class="row">
           <div class="col-xs-3 operation">
             <img class="img-responsive" src="images/new-user.png" data-op="new-user"/>
@@ -69,11 +69,11 @@
     <hr />
     <form role="form" id="user-creation">
       <div class="form-group">
-        <label for="name">User ID</label>
-        <input class="form-control" name="userId">
+        <label for="id">User ID</label>
+        <input class="form-control" name="id">
       </div>
       <div class="form-group">
-        <label for="name">User Password</label>
+        <label for="password">User Password</label>
         <input class="form-control" name="password">
       </div>
       <div class="form-group">
@@ -120,7 +120,7 @@
         <label>
           <input type="checkbox" value="analyse" name="perms">Analyse</label>
       </div>
-      <button class="btn btn-primary" type="submit">Submit</button>
+      <button class="btn btn-primary submit" type="button" id="new-user-submit">Submit</button>
     </form>
     <div class="user-alert"></div>
   </script>
@@ -147,5 +147,4 @@
   <script src="lib/jquery.js"></script>
   <script src="lib/underscore.js"></script>
   <script src="manager-code.js"></script>
-
 </html>

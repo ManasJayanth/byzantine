@@ -21,7 +21,11 @@ function handleData (buf, stream) {
                 //stream.write('error');
             });
             break;
-            
+
+            case 'userDetails':
+            user.register(req.data);
+            break;
+
             default:
             console.log('Unknown request type');
             break;

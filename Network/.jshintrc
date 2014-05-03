@@ -9,7 +9,8 @@
                  "alert": false,
                  "$": false,
                  "_": false,
-                 "window": false
+                 "window": false,
+                 "document": false
                 },
     "indent": 4,
     "camelcase": true,
