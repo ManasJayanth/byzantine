@@ -20,10 +20,17 @@ header div.pull-right {
 body {
     background-color: #D4D4D4;
 }
+
 #admin-ops {
     margin-top: 5%;
 }
+
 .operation h1 {
     text-align: center;
     font-size: 2em;
+}
+
+#workspace {
+    margin-left: 2%;
+    margin-right: 2%;
 }
