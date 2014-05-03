@@ -1,6 +1,6 @@
 var tls = require('tls'),
     fs = require('fs'),
-    dir = '/Users/prometheansacrifice/development/js/byzantine/Network';
+dir = require('./config').path + '/Network';
 
 function handleData (buf) {
 

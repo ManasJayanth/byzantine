@@ -5,3 +5,4 @@ nw-builds
 data
 node_modules
 *.nw
+config.json

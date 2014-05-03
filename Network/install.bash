@@ -66,6 +66,8 @@ cd ../
 echo "Installing npm dependencies"
 sudo npm install
 mkdir data
+bash create-server-keys.bash
+bash create-client-keys.bash
 ##  node, npm install, tmux, curl, brew, grunt-cli, libnss3-tools
 
 
