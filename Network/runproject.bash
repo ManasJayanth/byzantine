@@ -22,6 +22,7 @@ function runclient {
 }
 runmongod &&
 tmux split-window 'node server' &&
+grunt build &&
 runclient &&
 tmux select-layout even-horizontal &&
 tmux attach
