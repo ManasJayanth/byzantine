@@ -53,7 +53,7 @@ exports.authenticate = function (id, password, succCallback, errCallback) {
         });
 };
 
-exports.register = function (userData)  {
+exports.register = function (userData, callbackSuccess)  {
     var crypto = require('crypto');
     var shaSum = crypto.createHash('sha256');
     shaSum.update(userData.password);
@@ -75,20 +75,16 @@ exports.register = function (userData)  {
     });
 
     user.save(function (d) {
-        console.log('saved');
-        console.log(JSON.stringify(d));
+        callbackSuccess();
     });
 };
 
-function delUser(req, res) {
-    Account.remove({userId: req.body.userId}, function (err) {
+function delUser(id) {
+    Account.remove({userId: id}, function (err) {
         if (err) {
             console.log('Error occured:' + err);
-            res.send(400);
             // TODO - mongoose doesnt issue error on invalid delete
         }
-        console.log('User successfully deleted');
-        res.send(200);
     });
 }
 

@@ -23,7 +23,11 @@ function handleData (buf, stream) {
             break;
 
             case 'userDetails':
-            user.register(req.data);
+            user.register(req.data, function () {
+                stream.write(JSON.stringify({
+                    type: 'registrationSuccess'
+                }));
+            });
             break;
 
             default:

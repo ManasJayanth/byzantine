@@ -36,11 +36,35 @@ function handleData (buf) {
             displayDashboard();
             break;
 
+        case 'registrationSuccess':
+            successfulRegistration();
+            break;
         default:
             console.log('Unknown request type: ' + res.type);
             break;
         }
     }
+}
+
+function userLogin () {
+    console.log('Connection authorized by a Certificate Authority.');
+    var loginTemplate = $('#login-template').html();
+    $('#body-container').html(loginTemplate);
+
+    //--- UI Event ---//
+    $('#manager-login-submit').on('click', function () {
+        // conn.write(JSON.stringify({
+        //     name: 'admin',
+        //     password: 'admin',
+        //     type: 'auth'
+        // }));
+
+        conn.write(JSON.stringify({
+            name: $('#userId').val(),
+            password: $('#password').val(),
+            type: 'auth'
+        }));
+    });
 }
 
 function displayDashboard () {
@@ -84,24 +108,7 @@ function displayDashboard () {
     });
 }
 
-function userLogin () {
-    console.log('Connection authorized by a Certificate Authority.');
-    var loginTemplate = $('#login-template').html();
-    $('#body-container').html(loginTemplate);
-
-    //--- UI Event ---//
-    $('#manager-login-submit').on('click', function () {
-        // conn.write(JSON.stringify({
-        //     name: 'admin',
-        //     password: 'admin',
-        //     type: 'auth'
-        // }));
-
-        conn.write(JSON.stringify({
-            name: $('#userId').val(),
-            password: $('#password').val(),
-            type: 'auth'
-        }));
-    });
+function successfulRegistration () {
+    var regSuccessTemplate = $('#reg-success-template').html();
+    $('#workspace').html(regSuccessTemplate);
 }
-
