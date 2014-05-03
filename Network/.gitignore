@@ -1,6 +1,7 @@
 *.pem
 server-keys
 client-keys
-node-webkit.app
+nw-builds
+data
 node_modules
 *.nw

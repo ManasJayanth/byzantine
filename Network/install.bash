@@ -1,4 +1,5 @@
 # Detect the current ditro
+echo "Detecting OS"
 distro=$(uname)
 
 # if [ $distro == 'Linux' ]
@@ -19,37 +20,52 @@ case "$distro" in
         filename="downloaded.tar.gz"
         case $arch in
             32)
-                url="http://dl.node-webkit.org/v0.9.2/node-webkit-v0.9.2-linux-ia32.tar.gz"
+                url="http://dl.node-webkit.org/v0.8.6/node-webkit-v0.9.2-linux-ia32.tar.gz";;
             64)
-                url="http://dl.node-webkit.org/v0.9.2/node-webkit-v0.9.2-linux-x64.tar.gz";;
+                url="http://dl.node-webkit.org/v0.8.6/node-webkit-v0.9.2-linux-x64.tar.gz";;
         esac;;
     Darwin)
         filename="downloaded.zip"
         case $arch in
             32)
-                url="http://dl.node-webkit.org/v0.9.2/node-webkit-v0.9.2-osx-ia32.zip";;
+                url="http://dl.node-webkit.org/v0.8.6/node-webkit-v0.9.2-osx-ia32.zip";;
             64)
-                url="http://dl.node-webkit.org/v0.9.2/node-webkit-v0.9.2-osx-ia32.zip";;
+                url="http://dl.node-webkit.org/v0.8.6/node-webkit-v0.9.2-osx-ia32.zip";;
             ## might get updated in future
         esac;;
-esac;;
+esac
 
-mkdir tmp
+echo "Changing to temporary directory"
+if [[ ! -d tmp ]]
+then
+    echo "Not present...making one"
+    mkdir tmp
+fi
+
 cd tmp
-curl -o $filename $url  
-
+if [[ ! -f downloaded.tar.gz ]] 
+# false positive if file isn't downloaded completely
+# need to check md5 hash
+then
+    echo "Downloading node-webkit"
+    curl -o $filename $url
+fi
 case "$distro" in
     Linux)
-        tar -zxvf downloaded.tar.gz node-webkit-v0.8.6-linux-ia32/nw node-webkit-v0.8.6-linux-ia32/nw.pak
+        tar -zxvf downloaded.tar.gz
         cp node-webkit-v0.8.6-linux-ia32/nw ../nw-builds/
         cp node-webkit-v0.8.6-linux-ia32/nw.pak ../nw-builds/
-        esac;;
+	;;
     Darwin)
         unzip downloaded.zip node-webkit.app/* -d "../nw-builds/"
-        esac;;
-esac;;
+	;;
+esac
 
-
+echo "Back to project root"
+cd ../
+echo "Installing npm dependencies"
+sudo npm install
+mkdir data
 ##  node, npm install, tmux, curl, brew, grunt-cli, libnss3-tools
 
 
