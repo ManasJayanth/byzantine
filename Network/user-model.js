@@ -90,38 +90,6 @@ function delUser(req, res) {
 
 exports.deleteUser = delUser;
 
-exports.createAdmin = function () {
-    var crypto = require('crypto');
-    var shaSum = crypto.createHash('sha256');
-    shaSum.update('admin');
-    var hashedPassword = shaSum.digest('hex');
-    
-    var user = new Account({
-        userId: 'admin',
-        password: hashedPassword,
-        name: {
-            first: 'Rohit',
-            last: 'GS'
-        },
-        age: 22,
-        gender: 'male',
-        address: 'Bangalore',
-        phone: '',
-        department: 'ISE',
-        perms: ['upload', 'download', 'analyse'], //[upload, download, analyse]
-        userType: 'manager'
-    });
-    user.save(function (err, d) {
-        if (err) {
-            console.log(err);
-        } else {
-            console.log('Manager admin created');
-            console.log(JSON.stringify(d));
-        }
-    });
-};
-
-
 exports.logout = function (req, res) {
     req.session.loggedIn = false;
     exports.logs.push({
