@@ -90,6 +90,20 @@ function delUser(id) {
 
 exports.deleteUser = delUser;
 
+exports.edit = function (id, succCallback, errCallback) {
+    Account.findOne({userId: id},
+        function(err, doc) {
+            if(err) {
+                throw new Error('Error occured: ' + err);
+            }
+            if (doc) {
+                succCallback(doc);
+            } else {
+                errCallback();
+            }
+        });
+}
+
 exports.logout = function (req, res) {
     req.session.loggedIn = false;
     exports.logs.push({

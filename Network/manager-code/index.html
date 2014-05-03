@@ -135,14 +135,112 @@
   <script id="edit-user-template" type="text/template">
     <h1> Edit User </h1>
     <hr />
-    <form method="post" action="/delete-user" role="form" id="user-deletion">
+    <form role="form" id="user-edit">
       <div class="form-group">
         <label for="userId">User ID</label>
-        <input class="form-control" placeholder="User ID" name="userId">
+        <input class="form-control" placeholder="User ID" name="userId" id="userID-search">
       </div>
-      <button class="btn btn-primary" type="submit">Submit</button>
+      <button class="btn btn-primary" type="button" id="user-id-submit">Submit</button>
     </form>
-    <div class="user-alert"></div>
+    <div id="edit-user-results-space"> </div>
+  </script>
+
+  <script id="edit-user-results-template" type="text/template">
+    <hr />
+    <form role="form">
+      <div class="form-group">
+        <label for="id">User ID</label>
+        <input class="form-control" name="id" value="<%= userId %>">
+      </div>
+      <div class="form-group">
+        <label for="password">User Password</label>
+        <input class="form-control" name="password" value="<%= password %>">
+      </div>
+      <div class="form-group">
+        <label for="first">First Name</label>
+        <input class="form-control" name="first" value="<%= name.first %>">
+      </div>
+      <div class="form-group">
+        <label for="last">Last Name</label>
+        <input class="form-control" name="last" value="<%= name.last %>">
+      </div>
+      <div class="form-group">
+        <label for="age">Age</label>
+        <input class="form-control" name="age" value="<%= age %>">
+      </div>
+
+      <div class="radio">
+        <label>
+          <% if (gender === 'male') { %>
+          <input type="radio" checked="checked" value="male" name="gender"> Male
+          <% } else {%>
+          <input type="radio" value="male" name="gender"> Male
+          <% } %>
+        </label>
+      </div>
+      <div class="radio">
+        <label>
+        <label>
+          <% if (gender === 'female') { %>
+          <input type="radio" checked="checked" value="female" name="gender"> Female
+          <% } else {%>
+          <input type="radio" value="female" name="gender"> Female
+          <% } %>
+        </label>
+      </div>
+      <div class="form-group">
+        <label for="address">Address</label>
+        <input class="form-control" name="address" value="<%= address %>">
+      </div>
+      <div class="form-group">
+        <label for="phone">Phone</label>
+        <input class="form-control" name="phone" value="<%= phone %>">
+      </div>
+      <div class="form-group">
+        <label for="department">Department</label>
+        <input class="form-control" name="department" value="<%= department %>">
+      </div>
+
+      <div class="checkbox">
+        <label>
+          <% if (perms.indexOf('upload') !== -1) { %>
+          <input type="checkbox" value="upload" name="perms"
+                 checked="checked">
+          <% } else {%>
+          <input type="checkbox" value="upload" name="perms">
+          <% } %>
+          Upload
+        </label>
+      </div>
+      <div class="checkbox">
+        <label>
+          <% if (perms.indexOf('download') !== -1) { %>
+          <input type="checkbox" value="download" name="perms"
+                 checked="checked">
+          <% } else {%>
+          <input type="checkbox" value="download" name="perms">
+          <% } %>
+          Download
+        </label>
+      </div>
+      <div class="checkbox">
+        <label>
+          <% if (perms.indexOf('analyse') !== -1) { %>
+          <input type="checkbox" value="analyse" name="perms"
+                 checked="checked">
+          <% } else {%>
+          <input type="checkbox" value="analyse" name="perms">
+          <% } %>
+          Analyse
+        </label>
+      </div>
+      <button class="btn btn-primary submit" type="button" id="edit-user-submit">Submit</button>
+    </form>
+  </script>
+
+  <script id="empty-results-template" type="text/template">
+    <hr />
+    No user found!
   </script>
   <script id="fraud-list-template" type="text/template">
     Coming soon...fraud list

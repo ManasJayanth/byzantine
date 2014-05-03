@@ -9,28 +9,44 @@ function handleData (buf, stream) {
         console.log('Invalid request');
     } else {
         switch (req.type) {
-            case 'auth':
-            user.authenticate(req.name, req.password, function () {
-                console.log('awesome');
+        case 'auth':
+            user.authenticate(req.name, req.password,
+            function () {
                 stream.write(JSON.stringify({
                     type: 'loginSuccess'
                 }));
             },
             function () {
                 console.log('error');
-                //stream.write('error');
             });
             break;
 
-            case 'userDetails':
+        case 'userDetails':
             user.register(req.data, function () {
                 stream.write(JSON.stringify({
                     type: 'registrationSuccess'
                 }));
             });
             break;
+            
+        case 'editUser':
+            user.edit(req.data,
+                function (doc) {
+                    console.log(doc);
+                    stream.write(JSON.stringify({
+                        type: 'editUserResults',
+                        data: doc
+                    }));
+                },
+                function () {
+                    stream.write(JSON.stringify({
+                        type: 'editUserResults',
+                        data: 'none'
+                    }));
+                });
+            break;
 
-            default:
+        default:
             console.log('Unknown request type');
             break;
         }
