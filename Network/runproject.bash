@@ -4,6 +4,11 @@ function runmongod {
     then	
 	sudo kill $mongodpid
     fi
+    LOCK_FILE="data/mongod.lock"
+    if [[ -f $LOCK_FILE ]]
+    then
+        rm $LOCK_FILE
+    fi
     tmux new-session -d 'mongod --dbpath="data"'
 }
 function runclient {
