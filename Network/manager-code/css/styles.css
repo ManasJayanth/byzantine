@@ -11,6 +11,10 @@ header div.pull-left {
     font-size: 1.5em;
 }
 
+header div.pull-left:hover {
+    color: #F15A24
+}
+
 header div.pull-right {
     margin-top: 0.375em;
     line-height: 1.75em;

@@ -89,6 +89,7 @@ function displayDashboard () {
     $(document).on('click', '#new-user-submit', sendUserDetails);
     $(document).on('click', '#user-id-submit', sendUserID);
     $(document).on('click', '#edit-user-submit', editUserDetails);
+    $(document).on('click', 'header div.pull-left', displayDashboard);
 }
 
 function sendUserDetails (event) {
