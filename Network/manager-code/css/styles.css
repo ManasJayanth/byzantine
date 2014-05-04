@@ -34,3 +34,8 @@ body {
     margin-left: 2%;
     margin-right: 2%;
 }
+
+h1.op-header {
+    font-size: 2em;
+    font-style: italic;
+}

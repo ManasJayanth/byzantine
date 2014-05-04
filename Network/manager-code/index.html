@@ -65,8 +65,16 @@
   </script>
 
   <script id="new-user-template" type="text/template">
-    <h1>Register</h1>
-    <hr />
+    <div class="row">
+      <h1 class="op-header pull-right">
+        User Registration
+      </h1>
+    </div>
+    
+    <div class="row">
+      <hr>
+    </div>
+
     <form role="form" id="user-creation">
       <div class="form-group">
         <label for="id">User ID</label>
@@ -108,6 +116,9 @@
         <label for="department">Department</label>
         <input class="form-control" name="department">
       </div>
+      
+      <hr>
+      <label for="perms"> User Privileges </label>
       <div class="checkbox">
         <label>
           <input type="checkbox" value="upload" name="perms">Upload</label>
