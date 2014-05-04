@@ -16,7 +16,8 @@ var AccountSchema = new mongoose.Schema({
         last:    { type: String }
     },
     perms: {type: Array},
-    userType: { type: String }
+    userType: { type: String },
+    accessAllowed: {type: Boolean }
 });
 
 var Account = mongoose.model('Account', AccountSchema);
@@ -46,9 +47,13 @@ exports.authenticate = function (id, password, succCallback, errCallback) {
                 //     time: new Date().toUTCString(),
                 //     ip: req.connection.remoteAddress
                 // });
-                succCallback();
+                if (doc.accessAllowed) {
+                    succCallback();
+                } else {
+                    errCallback('MEMBERSHIP_REVOKED');
+                }
             } else {
-                errCallback();
+                errCallback('INVALID_CREDENTIALS');
             }
         });
 };
@@ -71,7 +76,8 @@ exports.register = function (userData, callbackSuccess)  {
         address: userData.address,
         phone: userData.phone,
         department: userData.department,
-        perms: userData.perms // [upload, download, analyse]
+        perms: userData.perms, // [upload, download, analyse]
+        accessAllowed: userData.accessAllowed
     });
 
     user.save(function (d) {
