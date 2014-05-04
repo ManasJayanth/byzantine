@@ -1,5 +1,5 @@
 function runmongod {
-    mongodpid=$(ps -ae | grep mongod | cut -d " " -f 1)
+    mongodpid=$(ps -ae | grep mongod | cut -d " " -f 1,7 | grep mongod | cut -d " " -f 1)
     if [[ $mongodpid != '' ]]
     then	
 	sudo kill $mongodpid
