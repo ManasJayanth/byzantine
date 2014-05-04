@@ -2,7 +2,7 @@ function runmongod {
     mongodpid=$(ps -ae | grep mongod | cut -d " " -f 1)
     if [[ $mongodpid != '' ]]
     then	
-	sudo kill mongodpid
+	sudo kill $mongodpid
     fi
     tmux new-session -d 'mongod --dbpath="data"'
 }
