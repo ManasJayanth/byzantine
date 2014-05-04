@@ -48,11 +48,17 @@ function handleData (buf, stream) {
         case 'editUserDetails':
             user.edit(req.data,
                 function (doc) {
-                    console.log('Updated doc: ');
-                    console.log(doc);
+                    stream.write(JSON.stringify({
+                        type: 'editUserResults',
+                        data: true
+                    }));
                 },
                 function () {
-                    console.log("User cannot be updated");
+                    stream.write(JSON.stringify({
+                        type: 'editUserResults',
+                        data: false
+                    }));
+
                 });
             break;
 

@@ -241,6 +241,23 @@
     <hr />
     No user found!
   </script>
+
+  <script id="edit-success-template" type="text/template">
+    <% if (result) { %>
+    <h1> Editing successful! </h1>
+    <hr />
+    <p>
+      The user's details were successfully edited
+    </p>
+    <% } else { %>
+    <h1> Error Occured! </h1>
+    <hr />
+    <p>
+      The user's details couldnot be saved
+    </p>
+    <% } %>
+  </script>
+
   <script id="fraud-list-template" type="text/template">
     Coming soon...fraud list
   </script>

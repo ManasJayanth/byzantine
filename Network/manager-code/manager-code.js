@@ -43,6 +43,10 @@ function handleData (buf) {
         case 'searchUserResults':
             processUserResults(res.data);
             break;
+            
+        case 'editUserResults':
+            editUserResult(res.data);
+            break;
 
         default:
             console.log('Unknown request type: ' + res.type);
@@ -168,4 +172,10 @@ function editUserDetails (event) {
         data: formObject
     };
     conn.write(JSON.stringify(request));
+}
+
+function editUserResult (result) {
+    var editSuccessTemplate = $('#edit-success-template').html();
+    var compiledTemplate = _.template(editSuccessTemplate, {result: result});
+    $('#workspace').html(compiledTemplate);
 }
