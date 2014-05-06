@@ -29,9 +29,17 @@ body {
     margin-top: 5%;
 }
 
-.operation h1 {
+.operation h1,
+.operation h4 {
     text-align: center;
+}
+
+.operation h1 {
     font-size: 2em;
+}
+
+.operation h4 {
+    font-size: 1.2em;
 }
 
 #workspace {
@@ -42,4 +50,9 @@ body {
 h1.op-header {
     font-size: 2em;
     font-style: italic;
+}
+
+p.edit-results-heading {
+    text-align: center;
+    font-weight: bold;
 }

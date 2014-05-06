@@ -140,9 +140,16 @@ function processUserResults (data) {
         var template = $('#empty-results-template').html();
         $('#edit-user-results-space').html(template);
     } else {
-        var placeholderTemplate = $('#edit-user-results-template').html();
-        var compiledTemplate = _.template(placeholderTemplate, data);
+        var opTemplate = $('#edit-user-results-template').html();
+        var compiledTemplate = _.template(opTemplate, data);
         $('#edit-user-results-space').html(compiledTemplate);
+        $(document).on('click', '#user-edit-ops .operation img', function () {
+            var placeholderTemplate = $('#' + $(this).attr('data-op') +
+                                      '-template').html();
+            var compiledTemplate = _.template(placeholderTemplate, data);
+            $('#workspace').html(compiledTemplate);
+        });
+
     }
 }
 

@@ -144,8 +144,16 @@
   </script>
 
   <script id="edit-user-template" type="text/template">
-    <h1> Edit User </h1>
-    <hr />
+    <div class="row">
+      <h1 class="op-header pull-right">
+        Edit User
+      </h1>
+    </div>
+    
+    <div class="row">
+      <hr>
+    </div>
+
     <form role="form" id="user-edit">
       <div class="form-group">
         <label for="userId">Search ID</label>
@@ -157,12 +165,41 @@
   </script>
 
   <script id="edit-user-results-template" type="text/template">
-    <hr />
-    <p>
+
+    <hr>
+    <p class="edit-results-heading">
       User ID <%= userId %> found!
-    <p>
-    <form role="form">
+    </p>      
+    <hr>
       
+    <div id="user-edit-ops" class="col-xs-12">
+      <div class="row">
+        <div class="col-xs-3 operation">
+          <img class="img-responsive" src="images/new-user.png" data-op="edit-user-info"/>
+          <h4> Edit User Info </h4>
+        </div>
+        <div class="col-xs-3 operation">
+          <img class="img-responsive" src="images/edit-user.png" data-op="new-password"/>
+          <h4> New Password </h4>
+        </div>
+        <div class="col-xs-3 operation">
+          <img class="img-responsive" src="images/fraud-list.png"  data-op="membership"/>
+          <h4> Add/Delete Membership </h4>
+        </div>
+        <div class="col-xs-3 operation">
+          <img class="img-responsive" src="images/list-user.png"  data-op="reassign-privileges"/>
+          <h4> Re-assign privileges </h4>
+        </div>
+      </div>
+    </div>
+
+  </script>
+
+
+
+  <script id="edit-user-info-template" type="text/template">
+    <hr>
+    <form role="form">      
       <!-- Hidden input field userID -->
       <input name="id" value="<%= userId %>" type="hidden">
       
@@ -246,11 +283,12 @@
       </div>
       <button class="btn btn-primary submit" type="button" id="edit-user-submit">Submit</button>
     </form>
-  </script>
+</script>
 
   <script id="empty-results-template" type="text/template">
     <hr />
-    No user found!
+    <h4> Invalid user ID </h4>
+    <p> No user found! </p>
   </script>
 
   <script id="edit-success-template" type="text/template">
