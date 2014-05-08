@@ -41,7 +41,7 @@ var user = new Account({
     phone: '',
     department: 'ISE',
     perms: ['upload', 'download', 'analyse'], //[upload, download, analyse]
-    userType: 'manager'
+    alloweAccess: true
 });
 
 console.log('Saving admin document..');
