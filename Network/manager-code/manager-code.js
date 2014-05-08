@@ -11,7 +11,15 @@ var options = {
 
 var conn = tls.connect(8000, '127.0.0.1', options, function() {
     if (conn.authorized) {
-//        userLogin();
+
+        // --- Registering button click handlers --- //
+        $(document).on('click', '#new-user-submit', sendUserDetails);
+        $(document).on('click', '#user-id-submit', sendUserID);
+        $(document).on('click', '#edit-user-submit', editUserDetails);
+        $(document).on('click', '#reassign-privileges-submit', editUserDetails);
+        $(document).on('click', 'header div.pull-left', displayDashboard);
+
+        // userLogin();
         displayDashboard();
         
     } else {
@@ -85,11 +93,6 @@ function displayDashboard () {
                                   '-template').html();
         $('#workspace').html(operationTemplate);
     });
-
-    $(document).on('click', '#new-user-submit', sendUserDetails);
-    $(document).on('click', '#user-id-submit', sendUserID);
-    $(document).on('click', '#edit-user-submit', editUserDetails);
-    $(document).on('click', 'header div.pull-left', displayDashboard);
 }
 
 function sendUserDetails (event) {
@@ -132,6 +135,7 @@ function sendUserID (event) {
         type: 'searchUser',
         data: $('#userID-search').val()
     };
+
     conn.write(JSON.stringify(request));
 }
 
@@ -179,6 +183,7 @@ function editUserDetails (event) {
         type: 'editUserDetails',
         data: formObject
     };
+
     conn.write(JSON.stringify(request));
 }
 

@@ -48,6 +48,9 @@ function handleData (buf, stream) {
         case 'editUserDetails':
             user.edit(req.data,
                 function (doc) {
+
+                    console.log(doc);
+
                     stream.write(JSON.stringify({
                         type: 'editUserResults',
                         data: true

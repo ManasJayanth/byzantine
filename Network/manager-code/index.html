@@ -199,7 +199,7 @@
 
   <script id="edit-user-info-template" type="text/template">
     <hr>
-    <form role="form">      
+    <form role="form">
       <!-- Hidden input field userID -->
       <input name="id" value="<%= userId %>" type="hidden">
       
@@ -289,6 +289,51 @@
     <hr />
     <h4> Invalid user ID </h4>
     <p> No user found! </p>
+  </script>
+
+  <script id="reassign-privileges-template" type="text/template">
+
+    <form role="form">      
+      <!-- Hidden input field userID -->
+      <input name="id" value="<%= userId %>" type="hidden">
+
+      <div class="checkbox">
+        <label>
+          <% if (perms.indexOf('upload') !== -1) { %>
+          <input type="checkbox" value="upload" name="perms"
+                 checked="checked">
+          <% } else {%>
+          <input type="checkbox" value="upload" name="perms">
+          <% } %>
+          Upload
+        </label>
+      </div>
+      <div class="checkbox">
+        <label>
+          <% if (perms.indexOf('download') !== -1) { %>
+          <input type="checkbox" value="download" name="perms"
+                 checked="checked">
+          <% } else {%>
+          <input type="checkbox" value="download" name="perms">
+          <% } %>
+          Download
+        </label>
+      </div>
+      <div class="checkbox">
+        <label>
+          <% if (perms.indexOf('analyse') !== -1) { %>
+          <input type="checkbox" value="analyse" name="perms"
+                 checked="checked">
+          <% } else {%>
+          <input type="checkbox" value="analyse" name="perms">
+          <% } %>
+          Analyse
+        </label>
+      </div>
+      <button class="btn btn-primary submit" type="button" id="reassign-privileges-submit">
+        Submit
+      </button>
+    </form>
   </script>
 
   <script id="edit-success-template" type="text/template">

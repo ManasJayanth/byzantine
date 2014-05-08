@@ -86,6 +86,7 @@ exports.register = function (userData, callbackSuccess)  {
 };
 
 exports.edit = function (userData, succCallback, errCallback)  {
+
     Account.findOne({userId: userData.id},
         function(err,doc) {
             if(err) {
@@ -94,10 +95,18 @@ exports.edit = function (userData, succCallback, errCallback)  {
             if (doc) {
                 console.log('found');
                 cloneObj(doc, userData);
-                doc.name.first = userData.first;
-                doc.name.last = userData.last;
-                doc.save (function () {
-                    succCallback(doc);
+                if (userData.first) {
+                    doc.name.first = userData.first;
+                }
+                if (userData.last) {
+                    doc.name.last = userData.last;
+                }
+                doc.save (function (err) {
+                    if (err) {
+                        errCallback();
+                    } else {
+                        succCallback(doc);
+                    }
                 });
             } else {
                 errCallback();
