@@ -18,14 +18,32 @@ var conn = tls.connect(8000, '127.0.0.1', options, function() {
 });
 
 conn.on("data", function (data) {
-//    console.log(data.toString());
+    handleData(data);
 });
+
+
+function handleData (buf) {
+    var res = JSON.parse(buf.toString());
+    if(typeof res.type === 'undefined') {
+        console.log('Invalid request');
+    } else {
+        switch (res.type) {
+        case 'loginSuccess':
+            displayDashboard();
+            break;
+
+        default:
+            console.log('Unknown request type: ' + res.type);
+            break;
+        }
+    }
+}
 
 
 function userLogin () {
     console.log('Connection authorized by a Certificate Authority.');
     var loginTemplate = $('#login-template').html();
-    $('#id').html(loginTemplate);
+    $('#body-container').html(loginTemplate);
 
     //--- UI Event ---//
     $('#client-login-submit').on('click', function () {
@@ -40,5 +58,16 @@ function userLogin () {
             password: $('#password').val(),
             type: 'auth'
         }));
+    });
+}
+
+function displayDashboard () {
+    var dashboardTemplate = $('#dashboard-template').html();
+    $('#body-container').html(dashboardTemplate);
+
+    $('.operation img').on('click', function () {
+        var operationTemplate = $('#' + $(this).attr('data-op') +
+                                  '-template').html();
+        $('#workspace').html(operationTemplate);
     });
 }

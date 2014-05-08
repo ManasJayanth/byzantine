@@ -57,7 +57,8 @@ module.exports = function(grunt) {
             scripts: {
                 files: filesToBeLinted.concat(['client-code/*.html',
                                                'manager-code/*.html',
-                                               'manager-code/css/styles.css']),
+                                               'manager-code/css/styles.css',
+                                               'client-code/css/styles.css']),
                 tasks: ['jshint', 'compress'],
                 options: {
                     spawn: false,

@@ -12,12 +12,13 @@ function handleData (buf, stream) {
         case 'auth':
             user.authenticate(req.name, req.password,
             function () {
+                console.log('Successful login')
                 stream.write(JSON.stringify({
                     type: 'loginSuccess'
                 }));
             },
             function () {
-                console.log('error');
+                console.log('Login failed');
             });
             break;
 

@@ -2,9 +2,10 @@
 <html>
   <head>
     <link rel="stylesheet" href="lib/bootstrap.css">
+    <link rel="stylesheet" href="css/styles.css">
   </head>
   <body>
-    <div id="id" class="container-fluid">
+    <div id="body-container">
     </div>
     <script src="lib/jquery.js"></script>
     <script src="lib/underscore.js"></script>
@@ -24,13 +25,46 @@
           <input id="password" type="password" placeholder="Password"
                  name="password" class="form-control">
         </div>
-        <button type="button" class="btn btn-primary" id="manager-login-submit">
+        <button type="button" class="btn btn-primary" id="client-login-submit">
           Login
         </button>
       </form>
     </div>
-
     </script>
+
+    <script id="dashboard-template" type="text/template">
+      <header class="pull-left">
+        <div class="pull-left">
+          Dashboard
+        </div>
+        <div class="pull-right">
+          Sign Out
+        </div>
+      </header>
+
+      <div id="workspace" class="container-fluid">
+        <div id="user-ops" class="col-xs-12">
+          <div class="row">
+            <div class="col-xs-4 operation">
+              <img class="img-responsive" src="images/file-upload.png"
+                   data-op="file-upload"/>
+              <h1> File Upload </h1>
+            </div>
+            <div class="col-xs-4 operation">
+              <img class="img-responsive" src="images/file-download.png"
+                   data-op="file-download"/>
+              <h1> File Download </h1>
+            </div>
+            <div class="col-xs-4 operation">
+              <img class="img-responsive" src="images/analyse-network.png"
+                   data-op="network-analysis"/>
+              <h1> Network Analysis </h1>
+            </div>
+          </div>
+        </div>
+      </div>
+    </script>
+
 
   </body>
 </html>

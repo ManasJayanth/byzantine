@@ -77,7 +77,7 @@ exports.register = function (userData, callbackSuccess)  {
         phone: userData.phone,
         department: userData.department,
         perms: userData.perms, // [upload, download, analyse]
-        accessAllowed: userData.accessAllowed
+        accessAllowed: true //userData.accessAllowed
     });
 
     user.save(function (d) {
