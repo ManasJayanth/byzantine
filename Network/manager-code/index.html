@@ -248,39 +248,39 @@
         <input class="form-control" name="department" value="<%= department %>">
       </div>
 
-      <div class="checkbox">
-        <label>
-          <% if (perms.indexOf('upload') !== -1) { %>
-          <input type="checkbox" value="upload" name="perms"
-                 checked="checked">
-          <% } else {%>
-          <input type="checkbox" value="upload" name="perms">
-          <% } %>
-          Upload
-        </label>
-      </div>
-      <div class="checkbox">
-        <label>
-          <% if (perms.indexOf('download') !== -1) { %>
-          <input type="checkbox" value="download" name="perms"
-                 checked="checked">
-          <% } else {%>
-          <input type="checkbox" value="download" name="perms">
-          <% } %>
-          Download
-        </label>
-      </div>
-      <div class="checkbox">
-        <label>
-          <% if (perms.indexOf('analyse') !== -1) { %>
-          <input type="checkbox" value="analyse" name="perms"
-                 checked="checked">
-          <% } else {%>
-          <input type="checkbox" value="analyse" name="perms">
-          <% } %>
-          Analyse
-        </label>
-      </div>
+      <!-- <div class="checkbox"> -->
+      <!--   <label> -->
+      <!--     <% if (perms.indexOf('upload') !== -1) { %> -->
+      <!--     <input type="checkbox" value="upload" name="perms" -->
+      <!--            checked="checked"> -->
+      <!--     <% } else {%> -->
+      <!--     <input type="checkbox" value="upload" name="perms"> -->
+      <!--     <% } %> -->
+      <!--     Upload -->
+      <!--   </label> -->
+      <!-- </div> -->
+      <!-- <div class="checkbox"> -->
+      <!--   <label> -->
+      <!--     <% if (perms.indexOf('download') !== -1) { %> -->
+      <!--     <input type="checkbox" value="download" name="perms" -->
+      <!--            checked="checked"> -->
+      <!--     <% } else {%> -->
+      <!--     <input type="checkbox" value="download" name="perms"> -->
+      <!--     <% } %> -->
+      <!--     Download -->
+      <!--   </label> -->
+      <!-- </div> -->
+      <!-- <div class="checkbox"> -->
+      <!--   <label> -->
+      <!--     <% if (perms.indexOf('analyse') !== -1) { %> -->
+      <!--     <input type="checkbox" value="analyse" name="perms" -->
+      <!--            checked="checked"> -->
+      <!--     <% } else {%> -->
+      <!--     <input type="checkbox" value="analyse" name="perms"> -->
+      <!--     <% } %> -->
+      <!--     Analyse -->
+      <!--   </label> -->
+      <!-- </div> -->
       <button class="btn btn-primary submit" type="button" id="edit-user-submit">Submit</button>
     </form>
 </script>
