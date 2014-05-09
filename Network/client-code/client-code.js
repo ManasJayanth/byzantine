@@ -11,38 +11,43 @@ var options = {
 
 var conn = tls.connect(8000, '127.0.0.1', options, function() {
     if (conn.authorized) {
+
+        $(document).on('click', '.operation img', function () {
+            var op = $(this).attr('data-op');
+            if (op === 'file-download') {
+                conn.write(JSON.stringify({
+                    type: 'list-files'
+                })); // template will be rendered when the response 
+                //'available-files' is received
+            } else {
+                var operationTemplate = $('#' + op + '-template').html();
+                $('#workspace').html(operationTemplate);
+            }
+        });
+        
+        $(document).on('click', '#download-button', function () {
+            conn.write(JSON.stringify({
+                type: 'download-request',
+                data: {
+                    name: $(this).attr('data-filename')
+                }
+            }));
+        });
+
         // userLogin();
         displayDashboard();
 
         var handleFileSelect = function (evt) {
             var files = evt.target.files; // FileList object
-
-
             var reader = new FileReader();
 
-
-
-            // files is a FileList of File objects. List some properties.
-            var output = [];
             for (var i = 0, f = files[i]; i < files.length; i++) {
-
-                
-                // var lastModDate = f.lastModifiedDate ? f.lastModifiedDate
-                //         .toLocaleDateString() : 'n/a';
-
-                // output.push('<li><strong>', f.name ,
-                //             '</strong> (', f.type || 'n/a', ') - ',
-                //             f.size, ' bytes, last modified: ',
-                //             lastModDate,
-                //             '</li>');
-
                 reader.readAsBinaryString(f);
 
                 /* jshint ignore:start */
                 reader.onload = (function(theFile) {
                     return function(e) {
                         nwUploadFile(theFile.name, theFile.path);
-                        console.log(theFile.path);
                     };
                 })(f);
                 /* jshint ignore:end */
@@ -52,6 +57,7 @@ var conn = tls.connect(8000, '127.0.0.1', options, function() {
 
 
         $(document).on('change', '#inputFile', handleFileSelect);
+        $(document).on('click', '#inputFile', handleFileSelect);
 
     } else {
         $('#body-container').html("Connection not authorized: " +
@@ -72,6 +78,21 @@ function handleData (buf) {
         switch (res.type) {
         case 'loginSuccess':
             displayDashboard();
+            break;
+
+        case 'files-available':
+            var placeHolderTemplate = $('#file-download-template').html();
+            var compiledTemplate = _.template(placeHolderTemplate, res.data);
+            $('#workspace').html(compiledTemplate);
+            break;
+
+        case 'download-response':
+            if (res.data.fileContents === 'error') {
+                console.log('error occured while downloading the file');
+            } else {
+                console.log(res.data);
+//                fs.writeFileSync(res.data.name, res.data.fileContents);
+            }
             break;
 
         default:
@@ -99,12 +120,6 @@ function userLogin () {
 function displayDashboard () {
     var dashboardTemplate = $('#dashboard-template').html();
     $('#body-container').html(dashboardTemplate);
-
-    $('.operation img').on('click', function () {
-        var operationTemplate = $('#' + $(this).attr('data-op') +
-                                  '-template').html();
-        $('#workspace').html(operationTemplate);
-    });
 }
 
 function nwUploadFile (name, path) {

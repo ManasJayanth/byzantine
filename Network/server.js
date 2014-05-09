@@ -72,9 +72,48 @@ function handleData (buf, stream) {
             case 'file-upload':
             fs.writeFileSync('user-files/' + req.data.name, req.data.fileContents);
             break;
+
+            case 'list-files':
+            var files = fs.readdirSync(__dirname + '/user-files/');
+            stream.write(JSON.stringify({
+                type: 'files-available',
+                data: {
+                    files: files
+                }
+            }));
+            break;
             
+            case 'download-request':
+            var content;
+            try {
+                content = fs.readFileSync(__dirname + '/user-files/' + req.data.name);
+                console.log('*********** File contents ********');
+                console.log(content);
+                stream.write(JSON.stringify({
+                    type: 'download-response',
+                    data: {
+                        name: req.data.name,
+                        fileContents: content.toString()
+                    }
+                }));
+
+            } catch (err) {
+
+
+                console.log(err);
+
+                stream.write(JSON.stringify({
+                    type: 'download-response',
+                    data: {
+                        data: 'error',
+                        fileContents: 'error'
+                    }
+                }));
+            }
+            break;
+
         default:
-            console.log('Unknown request type');
+            console.log('Unknown request type: ' + req.type);
             break;
         }
     }

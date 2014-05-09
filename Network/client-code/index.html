@@ -101,7 +101,36 @@
 </script>
 
 <script id="file-download-template" type="text/template">
-  coming soon file download
+    <div class="row">
+      <div class="col-xs-12">
+        <h2> Downloadable files </h2>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <table class="table table-striped">
+          <tr>
+            <th> File </th>
+            <th> Download link </th>
+          </tr>
+          <% for (var i = 0; i < files.length; ++i) { %>
+             <tr>
+               <td> <%=  files[i] %> </td>
+               <td>
+                 <button id="download-button" class="btn btn-default"
+                         data-filename="<%= files[i] %>">
+                   Download
+                 </button>
+               </td>
+             </tr>
+           <% } %>
+        </table>
+      </div>
+    </div>
+</script>
+
+  
+     
 </script>
 
 <script id="network-analysis-template" type="text/template">
