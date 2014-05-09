@@ -10,7 +10,8 @@
                  "$": false,
                  "_": false,
                  "window": false,
-                 "document": false
+                 "document": false,
+                 "FileReader": false
                 },
     "indent": 4,
     "camelcase": true,

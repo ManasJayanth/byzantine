@@ -7,6 +7,11 @@
   <body>
     <div id="body-container">
     </div>
+
+
+
+
+
     <script src="lib/jquery.js"></script>
     <script src="lib/underscore.js"></script>
     <script src="client-code.js"></script>
@@ -68,3 +73,37 @@
 
   </body>
 </html>
+
+
+<script id="file-upload-template" type="text/template">
+
+  <div id="file-upload" class="row">
+    <div class="col-xs-4"></div>
+    <div class="col-xs-4">
+      <form id="file-upload" role="form" action="/file-upload" method="post"
+            enctype="multipart/form-data" class="form-horizontal">
+        <div class="form-group">
+          <label for="inputFile" class="col-xs-4"></label>
+          <div class="col-xs-8">
+            <input type="file" name="inputFile" id="inputFile">
+          </div>
+        </div>
+      </form>
+
+    </div>
+
+
+  </div>
+  <div class="row">
+    <div class="user-alert">
+    </div>
+  </div>
+</script>
+
+<script id="file-download-template" type="text/template">
+  coming soon file download
+</script>
+
+<script id="network-analysis-template" type="text/template">
+  coming soon nw analysis
+</script>

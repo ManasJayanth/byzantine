@@ -61,3 +61,20 @@ p.edit-results-heading {
     text-align: center;
     font-weight: bold;
 }
+
+#file-upload {
+    margin-top: 5%;
+}
+
+#drop-area {
+    width: 60%;
+    margin: auto;
+    padding-top: 20%;
+    padding-bottom: 20%;
+    text-align:  center;
+    border: 3px dashed gray;
+}
+
+#drop-area:hover {
+    background-color: #E4E4E4;
+}
