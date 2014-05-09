@@ -88,7 +88,7 @@ function handleData (buf, stream) {
             try {
                 content = fs.readFileSync(__dirname + '/user-files/' + req.data.name);
                 console.log('*********** File contents ********');
-                console.log(content);
+                console.log(content.toString());
                 stream.write(JSON.stringify({
                     type: 'download-response',
                     data: {

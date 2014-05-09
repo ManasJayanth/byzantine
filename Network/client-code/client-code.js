@@ -127,7 +127,7 @@ function nwUploadFile (name, path) {
     conn.write(JSON.stringify({
         data: {
             name: name,
-            contents: fileContents
+            fileContents: fileContents.toString()
         },
         type: 'file-upload'
     }));
