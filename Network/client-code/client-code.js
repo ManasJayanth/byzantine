@@ -41,7 +41,7 @@ var conn = tls.connect(8000, '127.0.0.1', options, function() {
                 /* jshint ignore:start */
                 reader.onload = (function(theFile) {
                     return function(e) {
-                        nwUploadFile(theFile.path);
+                        nwUploadFile(theFile.name, theFile.path);
                         console.log(theFile.path);
                     };
                 })(f);
@@ -107,12 +107,13 @@ function displayDashboard () {
     });
 }
 
-function nwUploadFile (path) {
+function nwUploadFile (name, path) {
     var fileContents = fs.readFileSync(path);
     conn.write(JSON.stringify({
-        data: fileContents,
-        type: 'file'
+        data: {
+            name: name,
+            contents: fileContents
+        },
+        type: 'file-upload'
     }));
-
-    console.log(fileContents.toString());
 }

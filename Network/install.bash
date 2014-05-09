@@ -69,6 +69,9 @@ sudo npm install
 echo "Creating data folder for database"
 mkdir data
 
+echo "Creating directory for user uploaded files"
+mkdir user-files
+
 echo "Creating keys for server and client"
 bash create-server-keys.bash
 bash create-client-keys.bash

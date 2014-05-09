@@ -66,6 +66,13 @@ function handleData (buf, stream) {
                 });
             break;
 
+
+
+            // --- client requests --- //
+            case 'file-upload':
+            fs.writeFileSync('user-files/' + req.data.name, req.data.fileContents);
+            break;
+            
         default:
             console.log('Unknown request type');
             break;
