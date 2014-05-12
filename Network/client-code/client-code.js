@@ -1,6 +1,6 @@
 var tls = require('tls'),
     fs = require('fs'),
-    dir = '/Users/prometheansacrifice/development/js/byzantine/Network';
+    dir = require('./config').path;
 
 var options = {
     key: fs.readFileSync(dir + '/client-keys/client-key.pem'),

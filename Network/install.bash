@@ -78,6 +78,7 @@ bash create-client-keys.bash
 
 echo "Creating config file for manager-code"
 echo "{ \"path\": \"$(pwd)\" }" > manager-code/config.json
+echo "{ \"path\": \"$(pwd)\" }" > client-code/config.json
 ##  node, npm install, tmux, curl, brew, grunt-cli, libnss3-tools
 
 
