@@ -90,8 +90,14 @@ function handleData (buf) {
             if (res.data.fileContents === 'error') {
                 console.log('error occured while downloading the file');
             } else {
-                console.log(res.data);
-//                fs.writeFileSync(res.data.name, res.data.fileContents);
+		/* jshint ignore:start */
+		try {
+                    console.log(res.data);
+                    fs.writeFileSync(dir + '/nw-builds/user-files/' + res.data.name, res.data.fileContents);
+		} catch (err) {
+		    console.log('Error occured while writing to file: ' + err);
+		}
+		/* jshint ignore:end */
             }
             break;
 
