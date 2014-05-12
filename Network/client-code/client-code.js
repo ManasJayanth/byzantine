@@ -11,6 +11,17 @@ var options = {
 
 var conn = tls.connect(8000, '127.0.0.1', options, function() {
     if (conn.authorized) {
+        
+        // Initialisation
+        (function() {
+            console.log('Initialising');
+            var userFiles = dir + '/nw-builds/user-files/';
+            if (!fs.existsSync(userFiles)) {
+                console.log('Creating user-files directory');
+                fs.mkdir(userFiles);
+            }
+        })();
+            
 
         $(document).on('click', '.operation img', function () {
             var op = $(this).attr('data-op');
