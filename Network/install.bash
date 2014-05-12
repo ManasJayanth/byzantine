@@ -76,9 +76,9 @@ echo "Creating keys for server and client"
 bash create-server-keys.bash
 bash create-client-keys.bash
 
-echo "Creating config file for manager-code"
-echo "{ \"path\": \"$(pwd)\" }" > manager-code/config.json
-echo "{ \"path\": \"$(pwd)\" }" > client-code/config.json
+echo "Creating config file for manager-code and client-code"
+echo "{ \"path\": \"$(pwd)\", \"ip\": \"127.0.0.1\" }" > manager-code/config.json
+echo "{ \"path\": \"$(pwd)\", \"ip\": \"127.0.0.1\" }" > client-code/config.json
 ##  node, npm install, tmux, curl, brew, grunt-cli, libnss3-tools
 
 

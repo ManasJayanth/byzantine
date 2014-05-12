@@ -1,6 +1,7 @@
 var tls = require('tls'),
     fs = require('fs'),
-    dir = require('./config').path;
+    config = require('./config'),
+    dir = config.path;
 
 var options = {
     key: fs.readFileSync(dir + '/client-keys/client-key.pem'),
@@ -9,7 +10,7 @@ var options = {
     ca: [ fs.readFileSync(dir + '/server-keys/server-cert.pem') ]
 };
 
-var conn = tls.connect(8000, '127.0.0.1', options, function() {
+var conn = tls.connect(8000, config.ip, options, function() {
     if (conn.authorized) {
 
         // --- Registering button click handlers --- //
