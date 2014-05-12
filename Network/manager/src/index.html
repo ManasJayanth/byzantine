@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="lib/bootstrap.css" />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <div id="body-container"></div>
+  </body>
+
+  <!-- Templates -->
+  <script id="login-template" type="text/template">
+    <div id="workspace" class="container-fluid">
+      <h1> Manager Login </h1>
+      <hr />
+      <form role="form">
+        <div class="form-group">
+          <label for="userId">User ID</label>
+          <input id="userId" name="userId" class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input id="password" type="password" placeholder="Password"
+                 name="password" class="form-control">
+        </div>
+        <button type="button" class="btn btn-primary" id="manager-login-submit">
+          Login
+        </button>
+      </form>
+    </div>
+  </script>
+
+  <script id="dashboard-template" type="text/template">
+    <header class="pull-left">
+      <div class="pull-left">
+        Dashboard
+      </div>
+      <div class="pull-right">
+        Sign Out
+      </div>
+    </header>
+
+    <div id="workspace" class="container-fluid">
+       <div id="admin-ops" class="col-xs-12">
+        <div class="row">
+          <div class="col-xs-3 operation">
+            <img class="img-responsive" src="images/new-user.png" data-op="new-user"/>
+            <h1> New User </h1>
+          </div>
+          <div class="col-xs-3 operation">
+            <img class="img-responsive" src="images/edit-user.png" data-op="edit-user"/>
+            <h1> Edit User </h1>
+          </div>
+          <div class="col-xs-3 operation">
+            <img class="img-responsive" src="images/fraud-list.png"  data-op="fraud-list"/>
+            <h1> Fraud list </h1>
+          </div>
+          <div class="col-xs-3 operation">
+            <img class="img-responsive" src="images/list-user.png"  data-op="user-list"/>
+            <h1> User List </h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  </script>
+
+  <script id="new-user-template" type="text/template">
+    <div class="row">
+      <h1 class="op-header pull-right">
+        User Registration
+      </h1>
+    </div>
+    
+    <div class="row">
+      <hr>
+    </div>
+
+    <form role="form" id="user-creation">
+      <div class="form-group">
+        <label for="id">User ID</label>
+        <input class="form-control" name="id">
+      </div>
+      <div class="form-group">
+        <label for="password">User Password</label>
+        <input class="form-control" name="password">
+      </div>
+      <div class="form-group">
+        <label for="first">First Name</label>
+        <input class="form-control" name="first">
+      </div>
+      <div class="form-group">
+        <label for="last">Last Name</label>
+        <input class="form-control" name="last">
+      </div>
+      <div class="form-group">
+        <label for="age">Age</label>
+        <input class="form-control" name="age">
+      </div>
+      <div class="radio">
+        <label>
+          <input type="radio" checked="checked" value="male" name="gender">Male</label>
+      </div>
+      <div class="radio">
+        <label>
+          <input type="radio" checked="checked" value="female" name="gender">Female</label>
+      </div>
+      <div class="form-group">
+        <label for="address">Address</label>
+        <input class="form-control" name="address">
+      </div>
+      <div class="form-group">
+        <label for="phone">Phone</label>
+        <input class="form-control" name="phone">
+      </div>
+      <div class="form-group">
+        <label for="department">Department</label>
+        <input class="form-control" name="department">
+      </div>
+      
+      <hr>
+      <label for="perms"> User Privileges </label>
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" value="upload" name="perms">Upload</label>
+      </div>
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" value="download" name="perms">Download</label>
+      </div>
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" value="analyse" name="perms">Analyse</label>
+      </div>
+      <button class="btn btn-primary submit" type="button" id="new-user-submit">Submit</button>
+    </form>
+  </script>
+
+  <script id="reg-success-template" type="text/template">
+    <h1> Registration successful! </h1>
+    <hr />
+    <p>
+      The user was successfully registered
+    </p>
+  </script>
+
+  <script id="edit-user-template" type="text/template">
+    <div class="row">
+      <h1 class="op-header pull-right">
+        Edit User
+      </h1>
+    </div>
+    
+    <div class="row">
+      <hr>
+    </div>
+
+    <form role="form" id="user-edit">
+      <div class="form-group">
+        <label for="userId">Search ID</label>
+        <input class="form-control" placeholder="User ID" name="userId" id="userID-search">
+      </div>
+      <button class="btn btn-primary" type="button" id="user-id-submit">Submit</button>
+    </form>
+    <div id="edit-user-results-space"> </div>
+  </script>
+
+  <script id="edit-user-results-template" type="text/template">
+
+    <hr>
+    <p class="edit-results-heading">
+      User ID <%= userId %> found!
+    </p>      
+    <hr>
+      
+    <div id="user-edit-ops" class="col-xs-12">
+      <div class="row">
+        <div class="col-xs-3 operation">
+          <img class="img-responsive" src="images/new-user.png" data-op="edit-user-info"/>
+          <h4> Edit User Info </h4>
+        </div>
+        <div class="col-xs-3 operation">
+          <img class="img-responsive" src="images/edit-user.png" data-op="new-password"/>
+          <h4> New Password </h4>
+        </div>
+        <div class="col-xs-3 operation">
+          <img class="img-responsive" src="images/fraud-list.png"  data-op="membership"/>
+          <h4> Add/Delete Membership </h4>
+        </div>
+        <div class="col-xs-3 operation">
+          <img class="img-responsive" src="images/list-user.png"  data-op="reassign-privileges"/>
+          <h4> Re-assign privileges </h4>
+        </div>
+      </div>
+    </div>
+
+  </script>
+
+
+
+  <script id="edit-user-info-template" type="text/template">
+    <hr>
+    <form role="form">
+      <!-- Hidden input field userID -->
+      <input name="id" value="<%= userId %>" type="hidden">
+      
+      <div class="form-group">
+        <label for="first">First Name</label>
+        <input class="form-control" name="first" value="<%= name.first %>">
+      </div>
+      <div class="form-group">
+        <label for="last">Last Name</label>
+        <input class="form-control" name="last" value="<%= name.last %>">
+      </div>
+      <div class="form-group">
+        <label for="age">Age</label>
+        <input class="form-control" name="age" value="<%= age %>">
+      </div>
+
+      <div class="radio">
+        <label>
+          <% if (gender === 'male') { %>
+          <input type="radio" checked="checked" value="male" name="gender"> Male
+          <% } else {%>
+          <input type="radio" value="male" name="gender"> Male
+          <% } %>
+        </label>
+      </div>
+      <div class="radio">
+        <label>
+        <label>
+          <% if (gender === 'female') { %>
+          <input type="radio" checked="checked" value="female" name="gender"> Female
+          <% } else {%>
+          <input type="radio" value="female" name="gender"> Female
+          <% } %>
+        </label>
+      </div>
+      <div class="form-group">
+        <label for="address">Address</label>
+        <input class="form-control" name="address" value="<%= address %>">
+      </div>
+      <div class="form-group">
+        <label for="phone">Phone</label>
+        <input class="form-control" name="phone" value="<%= phone %>">
+      </div>
+      <div class="form-group">
+        <label for="department">Department</label>
+        <input class="form-control" name="department" value="<%= department %>">
+      </div>
+
+      <!-- <div class="checkbox"> -->
+      <!--   <label> -->
+      <!--     <% if (perms.indexOf('upload') !== -1) { %> -->
+      <!--     <input type="checkbox" value="upload" name="perms" -->
+      <!--            checked="checked"> -->
+      <!--     <% } else {%> -->
+      <!--     <input type="checkbox" value="upload" name="perms"> -->
+      <!--     <% } %> -->
+      <!--     Upload -->
+      <!--   </label> -->
+      <!-- </div> -->
+      <!-- <div class="checkbox"> -->
+      <!--   <label> -->
+      <!--     <% if (perms.indexOf('download') !== -1) { %> -->
+      <!--     <input type="checkbox" value="download" name="perms" -->
+      <!--            checked="checked"> -->
+      <!--     <% } else {%> -->
+      <!--     <input type="checkbox" value="download" name="perms"> -->
+      <!--     <% } %> -->
+      <!--     Download -->
+      <!--   </label> -->
+      <!-- </div> -->
+      <!-- <div class="checkbox"> -->
+      <!--   <label> -->
+      <!--     <% if (perms.indexOf('analyse') !== -1) { %> -->
+      <!--     <input type="checkbox" value="analyse" name="perms" -->
+      <!--            checked="checked"> -->
+      <!--     <% } else {%> -->
+      <!--     <input type="checkbox" value="analyse" name="perms"> -->
+      <!--     <% } %> -->
+      <!--     Analyse -->
+      <!--   </label> -->
+      <!-- </div> -->
+      <button class="btn btn-primary submit" type="button" id="edit-user-submit">Submit</button>
+    </form>
+</script>
+
+  <script id="empty-results-template" type="text/template">
+    <hr />
+    <h4> Invalid user ID </h4>
+    <p> No user found! </p>
+  </script>
+
+  <script id="reassign-privileges-template" type="text/template">
+
+    <form role="form">      
+      <!-- Hidden input field userID -->
+      <input name="id" value="<%= userId %>" type="hidden">
+
+      <div class="checkbox">
+        <label>
+          <% if (perms.indexOf('upload') !== -1) { %>
+          <input type="checkbox" value="upload" name="perms"
+                 checked="checked">
+          <% } else {%>
+          <input type="checkbox" value="upload" name="perms">
+          <% } %>
+          Upload
+        </label>
+      </div>
+      <div class="checkbox">
+        <label>
+          <% if (perms.indexOf('download') !== -1) { %>
+          <input type="checkbox" value="download" name="perms"
+                 checked="checked">
+          <% } else {%>
+          <input type="checkbox" value="download" name="perms">
+          <% } %>
+          Download
+        </label>
+      </div>
+      <div class="checkbox">
+        <label>
+          <% if (perms.indexOf('analyse') !== -1) { %>
+          <input type="checkbox" value="analyse" name="perms"
+                 checked="checked">
+          <% } else {%>
+          <input type="checkbox" value="analyse" name="perms">
+          <% } %>
+          Analyse
+        </label>
+      </div>
+      <button class="btn btn-primary submit" type="button" id="reassign-privileges-submit">
+        Submit
+      </button>
+    </form>
+  </script>
+
+  <script id="edit-success-template" type="text/template">
+    <% if (result) { %>
+    <h1> Editing successful! </h1>
+    <hr />
+    <p>
+      The user's details were successfully edited
+    </p>
+    <% } else { %>
+    <h1> Error Occured! </h1>
+    <hr />
+    <p>
+      The user's details couldnot be saved
+    </p>
+    <% } %>
+  </script>
+
+  <script id="fraud-list-template" type="text/template">
+    Coming soon...fraud list
+  </script>
+  <script id="user-list-template" type="text/template">
+    Coming soon...user list
+  </script>
+
+  <!-- Scripts -->
+  <script src="lib/jquery.js"></script>
+  <script src="lib/underscore.js"></script>
+  <script src="manager-code.js"></script>
+</html>
