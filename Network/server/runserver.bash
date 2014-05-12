@@ -17,6 +17,6 @@ function copyKeys {
 
 copyKeys
 runmongod &&
-tmux split-window 'nodemon server' &&
+tmux split-window 'nodemon src/server' &&
 tmux select-layout even-horizontal &&
 tmux attach
