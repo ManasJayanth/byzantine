@@ -2,6 +2,7 @@ function fetch_file () {
     baseUrl="http://$1:8123"
     curl "$baseUrl/$2" -o tmp.pem
     cp tmp.pem "../manager/keys/$2"
+    cp tmp.pem "../server/keys/$2" 
     mv tmp.pem "../client/keys/$2"
 }
 
