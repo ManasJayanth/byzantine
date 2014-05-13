@@ -1,3 +1,4 @@
+cd ../keys
 if [[ $(which http-server) = '' ]]
 then
     echo "http-server not found"
