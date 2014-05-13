@@ -1,6 +1,6 @@
-var tls = require('tls');
-var fs = require('fs');
-var user = require('./user-model');
+var tls = require('tls'),
+    fs = require('fs'),
+    user = require('./user-model');
 
 function handleData (buf, stream) {
 
@@ -70,11 +70,11 @@ function handleData (buf, stream) {
 
             // --- client requests --- //
             case 'file-upload':
-            fs.writeFileSync('user-files/' + req.data.name, req.data.fileContents);
+            fs.writeFileSync(__dirname + '/../user-files/' + req.data.name, req.data.fileContents);
             break;
 
             case 'list-files':
-            var files = fs.readdirSync(__dirname + '/user-files/');
+            var files = fs.readdirSync(__dirname + '/../user-files/');
             stream.write(JSON.stringify({
                 type: 'files-available',
                 data: {
@@ -120,14 +120,14 @@ function handleData (buf, stream) {
 }
 
 var options = {
-    key: fs.readFileSync('server-keys/server-key.pem'),
-    cert: fs.readFileSync('server-keys/server-cert.pem'),
+    key: fs.readFileSync('keys/server-key.pem'),
+    cert: fs.readFileSync('keys/server-cert.pem'),
 
     // This is necessary only if using the client certificate authentication.
     requestCert: true,
 
     // This is necessary only if the client uses the self-signed certificate.
-    ca: [ fs.readFileSync('client-keys/client-cert.pem') ]
+    ca: [ fs.readFileSync('keys/client-cert.pem') ]
 };
 
 var server = tls.createServer(options, function(cleartextStream) {

@@ -4,10 +4,10 @@ var tls = require('tls'),
     dir = config.path;
 
 var options = {
-    key: fs.readFileSync(dir + '/client-keys/client-key.pem'),
-    cert: fs.readFileSync(dir + '/client-keys/client-cert.pem'),
+    key: fs.readFileSync(dir + '/client/keys/client-key.pem'),
+    cert: fs.readFileSync(dir + '/client/keys/client-cert.pem'),
     rejectUnauthorized: true,
-    ca: [ fs.readFileSync(dir + '/server-keys/server-cert.pem') ]
+    ca: [ fs.readFileSync(dir + '/server/keys/server-cert.pem') ]
 };
 
 var conn = tls.connect(8000, config.ip, options, function() {

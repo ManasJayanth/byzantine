@@ -11,23 +11,12 @@ function runmongod {
     fi
     tmux new-session -d 'mongod --dbpath="data"'
 }
-function runclient {
-# Detect the current ditro
-    echo "Detecting OS"
-    distro=$(uname)
-
-    case "$distro" in
-	Linux)
-	    tmux split-window './nw-builds/nw ./nw-builds/manager.nw'
-	    ;;
-	Darwin)
-	    tmux split-window './nw-builds/node-webkit.app/Contents/MacOS/node-webkit ./nw-builds/manager.nw'
-	    ;;
-    esac
+function copyKeys {
+    cp ../keys/*.pem keys/
 }
+
+copyKeys
 runmongod &&
-tmux split-window 'node server' &&
-grunt build &&
-runclient &&
+tmux split-window 'nodemon src/server' &&
 tmux select-layout even-horizontal &&
 tmux attach
