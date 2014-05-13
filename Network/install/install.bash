@@ -15,7 +15,7 @@ fi
 
 case "$distro" in
     Linux)
-        filename="downloaded.tar.gz"
+        filename="downloaded.tar"
         case $arch in
             32)
                 url="http://dl.node-webkit.org/v0.8.6/node-webkit-v0.8.6-linux-ia32.tar.gz";;
@@ -41,21 +41,21 @@ then
 fi
 
 cd tmp
-if [[ ! -f downloaded.tar.gz ]] 
+if [[ ! -f "$filename" ]] 
 # false positive if file isn't downloaded completely
 # need to check md5 hash
 then
     echo "Downloading node-webkit"
-    curl -o $filename $url
+    curl -o "$filename" "$url"
 fi
 case "$distro" in
     Linux)
-        tar -zxvf downloaded.tar.gz
+        tar -xvf "$filename"
         cp node-webkit-v0.8.6-linux-ia32/nw ../nw-builds/
         cp node-webkit-v0.8.6-linux-ia32/nw.pak ../nw-builds/
 	;;
     Darwin)
-        unzip downloaded.zip node-webkit.app/* -d "../nw-builds/"
+        unzip "$filename" node-webkit.app/* -d "../nw-builds/"
 	;;
 esac
 
