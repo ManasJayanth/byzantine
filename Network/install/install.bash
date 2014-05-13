@@ -18,17 +18,17 @@ case "$distro" in
         filename="downloaded.tar.gz"
         case $arch in
             32)
-                url="http://dl.node-webkit.org/v0.8.6/node-webkit-v0.9.2-linux-ia32.tar.gz";;
+                url="http://dl.node-webkit.org/v0.8.6/node-webkit-v0.8.6-linux-ia32.tar.gz";;
             64)
-                url="http://dl.node-webkit.org/v0.8.6/node-webkit-v0.9.2-linux-x64.tar.gz";;
+                url="http://dl.node-webkit.org/v0.8.6/node-webkit-v0.8.6-linux-x64.tar.gz";;
         esac;;
     Darwin)
         filename="downloaded.zip"
         case $arch in
             32)
-                url="http://dl.node-webkit.org/v0.8.6/node-webkit-v0.9.2-osx-ia32.zip";;
+                url="http://dl.node-webkit.org/v0.8.6/node-webkit-v0.8.6-osx-ia32.zip";;
             64)
-                url="http://dl.node-webkit.org/v0.8.6/node-webkit-v0.9.2-osx-ia32.zip";;
+                url="http://dl.node-webkit.org/v0.8.6/node-webkit-v0.8.6-osx-ia32.zip";;
             ## might get updated in future
         esac;;
 esac
