@@ -76,6 +76,12 @@ bash create-keys.bash server
 bash create-keys.bash client
 cd ../
 
+
+echo "Making directories for keys..."
+mkdir server/keys
+mkdir client/keys
+mkdir manager/keys
+
 echo "Creating config file for manager-code and client-code"
 echo "{ \"path\": \"$(pwd)\", \"ip\": \"127.0.0.1\" }" > manager/src/config.json
 echo "{ \"path\": \"$(pwd)\", \"ip\": \"127.0.0.1\" }" > client/src/config.json
