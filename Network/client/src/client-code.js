@@ -68,10 +68,14 @@ function handleData (buf) {
             } else {
 		/* jshint ignore:start */
 		try {
-                    console.log(res.data);
-                    fs.writeFileSync(dir + '/nw-builds/user-files/' + res.data.name, res.data.fileContents);
+                    fs.writeFileSync(dir + '/nw-builds/user-files/' + res.data.name,
+                                     res.data.fileContents);
+                    $('#download-results').html('<div class="alert alert-success">' +
+                       res.data.name + ' successfully downloaded </div>');
 		} catch (err) {
 		    console.log('Error occured while writing to file: ' + err);
+                    $('#download-results').html('<div class="alert alert-danger">' +
+                       res.data.name + ' could not be downloaded </div>');
 		}
 		/* jshint ignore:end */
             }
