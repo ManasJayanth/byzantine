@@ -14,4 +14,4 @@ function runmanager {
 }
 
 grunt build &&
-runmanager &&
+runmanager

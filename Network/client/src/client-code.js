@@ -25,53 +25,17 @@ var conn = tls.connect(8000, config.ip , options, function() {
         })();
             
 
-        $(document).on('click', '.operation img', function () {
-            var op = $(this).attr('data-op');
-            if (op === 'file-download') {
-                conn.write(JSON.stringify({
-                    type: 'list-files'
-                })); // template will be rendered when the response 
-                //'available-files' is received
-            } else {
-                var operationTemplate = $('#' + op + '-template').html();
-                $('#workspace').html(operationTemplate);
-            }
-        });
-        
-        $(document).on('click', '#download-button', function () {
-            conn.write(JSON.stringify({
-                type: 'download-request',
-                data: {
-                    name: $(this).attr('data-filename')
-                }
-            }));
-        });
-
-        // userLogin();
-        displayDashboard();
-
-        var handleFileSelect = function (evt) {
-            var files = evt.target.files; // FileList object
-            var reader = new FileReader();
-
-            for (var i = 0, f = files[i]; i < files.length; i++) {
-                reader.readAsBinaryString(f);
-
-                /* jshint ignore:start */
-                reader.onload = (function(theFile) {
-                    return function(e) {
-                        nwUploadFile(theFile.name, theFile.path);
-                    };
-                })(f);
-                /* jshint ignore:end */
-
-            }
-        };
-
-
+        // --- Registering button click handlers --- //
+        $(document).on('click', 'header div.pull-left', displayDashboard);
+        $(document).on('click', '.operation img', renderOpTemplate);
+        $(document).on('click', '#download-button', downloadFile);
         $(document).on('change', '#inputFile', handleFileSelect);
         $(document).on('click', '#inputFile', handleFileSelect);
 
+
+        // --- Starting the application --- //
+        // userLogin();
+        displayDashboard(); //Only for testing
     } else {
         $('#body-container').html("Connection not authorized: " +
                                   conn.authorizationError);
@@ -81,7 +45,6 @@ var conn = tls.connect(8000, config.ip , options, function() {
 conn.on("data", function (data) {
     handleData(data);
 });
-
 
 function handleData (buf) {
     var res = JSON.parse(buf.toString());
@@ -141,6 +104,19 @@ function displayDashboard () {
     $('#body-container').html(dashboardTemplate);
 }
 
+function renderOpTemplate () {
+    var op = $(this).attr('data-op');
+    if (op === 'file-download') {
+        conn.write(JSON.stringify({
+            type: 'list-files'
+        })); // template will be rendered when the response 
+        //'available-files' is received
+    } else {
+        var operationTemplate = $('#' + op + '-template').html();
+        $('#workspace').html(operationTemplate);
+    }
+}
+
 function nwUploadFile (name, path) {
     var fileContents = fs.readFileSync(path);
     conn.write(JSON.stringify({
@@ -150,4 +126,31 @@ function nwUploadFile (name, path) {
         },
         type: 'file-upload'
     }));
+}
+
+function downloadFile () {
+    conn.write(JSON.stringify({
+        type: 'download-request',
+        data: {
+            name: $(this).attr('data-filename')
+        }
+    }));
+}
+
+function handleFileSelect (evt) {
+    var files = evt.target.files; // FileList object
+    var reader = new FileReader();
+
+    for (var i = 0, f = files[i]; i < files.length; i++) {
+        reader.readAsBinaryString(f);
+
+        /* jshint ignore:start */
+        reader.onload = (function(theFile) {
+            return function(e) {
+                nwUploadFile(theFile.name, theFile.path);
+            };
+        })(f);
+        /* jshint ignore:end */
+
+    }
 }
