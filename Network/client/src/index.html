@@ -8,10 +8,6 @@
     <div id="body-container">
     </div>
 
-
-
-
-
     <script src="lib/jquery.js"></script>
     <script src="lib/underscore.js"></script>
     <script src="client-code.js"></script>
@@ -131,7 +127,29 @@
 </script>
 
   
-     
+<script id="logged-in-users-template" type="text/template">
+    <div class="row">
+      <div class="col-xs-6">
+        <h2> Logged in clients </h2>
+      </div>
+      <div class="pull-right" id="download-results"></div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <table class="table table-striped">
+          <tr>
+            <th> Client ID </th>
+            <th> Time of login </th>
+          </tr>
+          <% for (var i = 0; i < clients.length; ++i) { %>
+             <tr>
+               <td> <%=  clients[i].userId %> </td>
+               <td> <%=  clients[i].timeOfLogin %> </td>
+             </tr>
+           <% } %>
+        </table>
+      </div>
+    </div>
 </script>
 
 <script id="network-analysis-template" type="text/template">

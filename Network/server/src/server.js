@@ -2,6 +2,8 @@ var tls = require('tls'),
     fs = require('fs'),
     user = require('./user-model');
 
+var loggedInUsers = [];
+
 function handleData (buf, stream) {
 
     var req = JSON.parse(buf.toString());
@@ -11,8 +13,13 @@ function handleData (buf, stream) {
         switch (req.type) {
         case 'auth':
             user.authenticate(req.name, req.password,
-            function () {
+            function (doc) {
                 console.log('Successful login')
+                loggedInUsers.push({
+                    userId: doc.userId,
+                    timeOfLogin: new Date().toUTCString(),
+                    perms: doc.perms
+                });
                 stream.write(JSON.stringify({
                     type: 'loginSuccess'
                 }));
@@ -70,7 +77,8 @@ function handleData (buf, stream) {
 
             // --- client requests --- //
             case 'file-upload':
-            fs.writeFileSync(__dirname + '/../user-files/' + req.data.name, req.data.fileContents);
+            fs.writeFileSync(__dirname + '/../user-files/' + req.data.name,
+                             req.data.fileContents);
             break;
 
             case 'list-files':
@@ -99,7 +107,6 @@ function handleData (buf, stream) {
 
             } catch (err) {
 
-
                 console.log(err);
 
                 stream.write(JSON.stringify({
@@ -112,6 +119,13 @@ function handleData (buf, stream) {
             }
             break;
 
+            case 'list-users':
+            stream.write(JSON.stringify({
+                type: 'logged-in-users',
+                data: loggedInUsers
+            }));
+            break;
+            
         default:
             console.log('Unknown request type: ' + req.type);
             break;

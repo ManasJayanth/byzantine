@@ -10,7 +10,6 @@ var options = {
     ca: [ fs.readFileSync(dir + '/server/keys/server-cert.pem') ]
 };
 
-
 var conn = tls.connect(8000, config.ip , options, function() {
     if (conn.authorized) {
         
@@ -34,8 +33,8 @@ var conn = tls.connect(8000, config.ip , options, function() {
 
 
         // --- Starting the application --- //
-        // userLogin();
-        displayDashboard(); //Only for testing
+        userLogin();
+       //  displayDashboard(); //Only for testing
     } else {
         $('#body-container').html("Connection not authorized: " +
                                   conn.authorizationError);
@@ -47,6 +46,9 @@ conn.on("data", function (data) {
 });
 
 function handleData (buf) {
+
+    var placeHolderTemplate, compiledTemplate;
+
     var res = JSON.parse(buf.toString());
     if(typeof res.type === 'undefined') {
         console.log('Invalid request');
@@ -57,8 +59,8 @@ function handleData (buf) {
             break;
 
         case 'files-available':
-            var placeHolderTemplate = $('#file-download-template').html();
-            var compiledTemplate = _.template(placeHolderTemplate, res.data);
+            placeHolderTemplate = $('#file-download-template').html();
+            compiledTemplate = _.template(placeHolderTemplate, res.data);
             $('#workspace').html(compiledTemplate);
             break;
 
@@ -79,6 +81,13 @@ function handleData (buf) {
 		}
 		/* jshint ignore:end */
             }
+            break;
+
+        case 'logged-in-users':
+            placeHolderTemplate = $('#logged-in-users-template').html();
+            compiledTemplate = _.template(placeHolderTemplate,
+                                          {clients: res.data});
+            $('#workspace').html(compiledTemplate);
             break;
 
         default:
@@ -115,7 +124,12 @@ function renderOpTemplate () {
             type: 'list-files'
         })); // template will be rendered when the response 
         //'available-files' is received
-    } else {
+    } else if (op === 'network-analysis') {
+        conn.write(JSON.stringify({
+            type: 'list-users'
+        })); // template will be rendered when the response 
+        //'logged-in-users' is received
+    }else {
         var operationTemplate = $('#' + op + '-template').html();
         $('#workspace').html(operationTemplate);
     }

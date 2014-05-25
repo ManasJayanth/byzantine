@@ -34,21 +34,8 @@ exports.authenticate = function (id, password, succCallback, errCallback) {
             }
 
             if (doc) {
-                // req.session.loggedIn = true;
-                // req.session.userId = doc.userId;
-                // req.session.perms = doc.perms;
-                // exports.loggedInUsers.push({
-                //     id: doc.userId,
-                //     time: new Date().toUTCString()
-                // });
-                // exports.logs.push({
-                //     message: 'UID ' + req.session.userId + ' has logged in',
-                //     type: 'normal',
-                //     time: new Date().toUTCString(),
-                //     ip: req.connection.remoteAddress
-                // });
                 if (doc.accessAllowed) {
-                    succCallback();
+                    succCallback(doc);
                 } else {
                     errCallback('MEMBERSHIP_REVOKED');
                 }
