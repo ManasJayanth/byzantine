@@ -6,3 +6,4 @@ data
 node_modules
 *.nw
 config.json
+user-files
