@@ -3,6 +3,12 @@ var tls = require('tls'),
     config = require('./config'),
     dir = config.path;
 
+var client = {
+    can: function (operation) {
+        return this.details.perms.indexOf(operation) ? true: false;
+    }
+};
+
 var options = {
     key: fs.readFileSync(dir + '/client/keys/client-key.pem'),
     cert: fs.readFileSync(dir + '/client/keys/client-cert.pem'),
@@ -55,6 +61,7 @@ function handleData (buf) {
     } else {
         switch (res.type) {
         case 'loginSuccess':
+            client.details = res.data;
             displayDashboard();
             break;
 
@@ -104,6 +111,7 @@ function userLogin () {
 
     //--- UI Event ---//
     $('#client-login-submit').on('click', function () {
+
         conn.write(JSON.stringify({
             name: $('#userId').val(),
             password: $('#password').val(),
@@ -118,20 +126,47 @@ function displayDashboard () {
 }
 
 function renderOpTemplate () {
+    function alertUser (message) {
+        var placeHolderTemplate = $('#operation-access-denied').html();
+        var compiledTemplate = _.template(placeHolderTemplate,
+                                          {message: message});
+        $('#alert-space').html(compiledTemplate);
+    }
+
     var op = $(this).attr('data-op');
-    if (op === 'file-download') {
-        conn.write(JSON.stringify({
-            type: 'list-files'
-        })); // template will be rendered when the response 
-        //'available-files' is received
-    } else if (op === 'network-analysis') {
-        conn.write(JSON.stringify({
-            type: 'list-users'
-        })); // template will be rendered when the response 
-        //'logged-in-users' is received
-    }else {
-        var operationTemplate = $('#' + op + '-template').html();
-        $('#workspace').html(operationTemplate);
+    switch (op) {
+    case 'file-download':
+        if (client.can('download')) {
+            
+            conn.write(JSON.stringify({
+                type: 'list-files'
+            })); // template will be rendered when the response 
+            //'available-files' is received
+            
+        } else {
+            alertUser('You donot have download access');
+        }
+        break;
+        
+    case 'network-analysis':
+        if (client.can('analyse')) {
+            conn.write(JSON.stringify({
+                type: 'list-users'
+            })); // template will be rendered when the response 
+            //'logged-in-users' is received
+        } else {
+            alertUser('You donot have access to network analysis');
+        }
+        break;
+        
+    case 'file-upload':
+        if (client.can('upload')) {
+            var operationTemplate = $('#' + op + '-template').html();
+            $('#workspace').html(operationTemplate);
+        } else {
+            alertUser('You donot have upload access');
+        }
+        break;
     }
 }
 

@@ -21,7 +21,11 @@ function handleData (buf, stream) {
                     perms: doc.perms
                 });
                 stream.write(JSON.stringify({
-                    type: 'loginSuccess'
+                    type: 'loginSuccess',
+                    data: {
+                        id: doc.userId,
+                        perms: doc.perms
+                    }
                 }));
             },
             function () {
