@@ -5,7 +5,7 @@ var tls = require('tls'),
 
 var client = {
     can: function (operation) {
-        return this.details.perms.indexOf(operation) ? true: false;
+        return this.details.perms.indexOf(operation) !== -1 ? true: false;
     }
 };
 
@@ -61,7 +61,7 @@ function handleData (buf) {
     } else {
         switch (res.type) {
         case 'loginSuccess':
-            client.details = res.data;
+            client.details = $.extend({}, client.details, res.data);
             displayDashboard();
             break;
 
