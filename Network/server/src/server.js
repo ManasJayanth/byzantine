@@ -2,7 +2,8 @@ var tls = require('tls'),
     fs = require('fs'),
     user = require('./user-model');
 
-var loggedInUsers = [];
+var loggedInUsers = [],
+    fraudLogs = [];
 
 function handleData (buf, stream) {
 
@@ -77,7 +78,14 @@ function handleData (buf, stream) {
                 });
             break;
 
-
+        case 'get-fraud-logs':
+            stream.write(JSON.stringify({
+                type: 'fraud-logs',
+                data: {
+                    logs: fraudLogs
+                }
+            }));            
+            break;
 
             // --- client requests --- //
             case 'file-upload':
@@ -128,6 +136,15 @@ function handleData (buf, stream) {
                 type: 'logged-in-users',
                 data: loggedInUsers
             }));
+            break;
+
+            case 'fraudulent-access':
+            fraudLogs.push({
+                userId: req.data.id,
+                op: req.data.op,
+                time: new Date().toUTCString(),
+                ip: stream.remoteAddress
+            });
             break;
             
         default:

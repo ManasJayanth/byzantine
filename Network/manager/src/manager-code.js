@@ -57,6 +57,10 @@ function handleData (buf) {
             editUserResult(res.data);
             break;
 
+        case 'fraud-logs':
+            displayFraudLogs(res.data.logs);
+            break;
+
         default:
             console.log('Unknown request type: ' + res.type);
             break;
@@ -90,9 +94,16 @@ function displayDashboard () {
     $('#body-container').html(dashboardTemplate);
 
     $('.operation img').on('click', function () {
-        var operationTemplate = $('#' + $(this).attr('data-op') +
+        var op = $(this).attr('data-op');
+        var operationTemplate = $('#' + op +
                                   '-template').html();
-        $('#workspace').html(operationTemplate);
+        if (op === 'fraud-list' ) {
+            conn.write(JSON.stringify({
+                type: 'get-fraud-logs'
+            }));
+        } else {
+            $('#workspace').html(operationTemplate);
+        }
     });
 }
 
@@ -191,5 +202,11 @@ function editUserDetails (event) {
 function editUserResult (result) {
     var editSuccessTemplate = $('#edit-success-template').html();
     var compiledTemplate = _.template(editSuccessTemplate, {result: result});
+    $('#workspace').html(compiledTemplate);
+}
+
+function displayFraudLogs(logs) {
+    var editSuccessTemplate = $('#fraud-list-template').html();
+    var compiledTemplate = _.template(editSuccessTemplate, {clients: logs});
     $('#workspace').html(compiledTemplate);
 }
