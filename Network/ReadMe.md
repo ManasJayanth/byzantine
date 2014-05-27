@@ -6,7 +6,13 @@ Enhanced Byzantine Fault Tolerance with membership service
 
     bash install.bash
 
-Fill in the details for certificates
+Open `client-cert.conf` and `server-cert.conf` in `keys` folder and change the `subjectAltName` to the server's IP address
+
+    subjectAltName=IP:127.0.0.1
+
+Generate the keys
+
+    cd keys && create-keys.bash server && create-keys.bash client
 
 Keys and certificates need to be exchanged between the client and the server before any communication can begin
 
