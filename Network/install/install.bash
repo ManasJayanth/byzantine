@@ -70,13 +70,6 @@ mkdir "server/data"
 echo "Creating directory for user uploaded files"
 mkdir "server/user-files"
 
-echo "Creating keys for server and client"
-cd keys
-bash create-keys.bash server
-bash create-keys.bash client
-cd ../
-
-
 echo "Making directories for keys..."
 mkdir server/keys
 mkdir client/keys
