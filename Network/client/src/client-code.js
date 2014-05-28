@@ -4,6 +4,7 @@ var tls = require('tls'),
     dir = config.path;
 
 var client = {
+    fraudCount: 0,
     can: function (operation) {
         return this.details.perms.indexOf(operation) !== -1 ? true: false;
     }
@@ -40,7 +41,6 @@ var conn = tls.connect(8000, config.ip , options, function() {
 
         // --- Starting the application --- //
         userLogin();
-       //  displayDashboard(); //Only for testing
     } else {
         $('#body-container').html("Connection not authorized: " +
                                   conn.authorizationError);
@@ -144,14 +144,26 @@ function renderOpTemplate () {
             //'available-files' is received
             
         } else {
-            conn.write(JSON.stringify({
-                type: 'fraudulent-access',
-                data: {
-                    id: client.details.id,
-                    op: 'download'
-                }
-            }));
-            alertUser('You donot have download access');
+
+            if (client.fraudCount++ >= 5 && client.details.allowedAccess) {
+                client.details.allowedAccess = false;
+                conn.write(JSON.stringify({
+                    type: 'deny-user',
+                    data: {
+                        id: client.details.id
+                    }
+                }));
+            } else {
+
+                conn.write(JSON.stringify({
+                    type: 'fraudulent-access',
+                    data: {
+                        id: client.details.id,
+                        op: 'download'
+                    }
+                }));
+                alertUser('You donot have download access');
+            }
         }
         break;
         
@@ -162,14 +174,25 @@ function renderOpTemplate () {
             })); // template will be rendered when the response 
             //'logged-in-users' is received
         } else {
-            conn.write(JSON.stringify({
-                type: 'fraudulent-access',
-                data: {
-                    id: client.details.id,
-                    op: 'analysis'
-                }
-            }));
-            alertUser('You donot have access to network analysis');
+
+            if (client.fraudCount++ >= 5) {
+                client.details.allowedAccess = false;
+                conn.write(JSON.stringify({
+                    type: 'deny-user',
+                    data: {
+                        id: client.details.id
+                    }
+                }));
+            } else {
+                conn.write(JSON.stringify({
+                    type: 'fraudulent-access',
+                    data: {
+                        id: client.details.id,
+                        op: 'analysis'
+                    }
+                }));
+                alertUser('You donot have access to network analysis');
+            }
         }
         break;
         
@@ -178,14 +201,25 @@ function renderOpTemplate () {
             var operationTemplate = $('#' + op + '-template').html();
             $('#workspace').html(operationTemplate);
         } else {
-            conn.write(JSON.stringify({
-                type: 'fraudulent-access',
-                data: {
-                    id: client.details.id,
-                    op: 'upload'
-                }
-            }));
-            alertUser('You donot have upload access');
+
+            if (client.fraudCount++ >= 5) {
+                client.details.allowedAccess = false;
+                conn.write(JSON.stringify({
+                    type: 'deny-user',
+                    data: {
+                        id: client.details.id
+                    }
+                }));
+            } else {
+                conn.write(JSON.stringify({
+                    type: 'fraudulent-access',
+                    data: {
+                        id: client.details.id,
+                        op: 'upload'
+                    }
+                }));
+                alertUser('You donot have upload access');
+            }
         }
         break;
     }

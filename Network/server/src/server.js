@@ -3,7 +3,8 @@ var tls = require('tls'),
     user = require('./user-model');
 
 var loggedInUsers = [],
-    fraudLogs = [];
+    fraudLogs = [],
+    blockedUsers = [];
 
 function handleData (buf, stream) {
 
@@ -23,10 +24,7 @@ function handleData (buf, stream) {
                 });
                 stream.write(JSON.stringify({
                     type: 'loginSuccess',
-                    data: {
-                        id: doc.userId,
-                        perms: doc.perms
-                    }
+                    data: doc
                 }));
             },
             function () {
@@ -82,7 +80,8 @@ function handleData (buf, stream) {
             stream.write(JSON.stringify({
                 type: 'fraud-logs',
                 data: {
-                    logs: fraudLogs
+                    fraudLogs: fraudLogs,
+                    blockedUsers: blockedUsers
                 }
             }));            
             break;
@@ -105,6 +104,7 @@ function handleData (buf, stream) {
             
             case 'download-request':
             var content;
+
             try {
                 content = fs.readFileSync(__dirname + '/../user-files/' + req.data.name);
                 console.log('*********** File contents ********');
@@ -146,7 +146,15 @@ function handleData (buf, stream) {
                 ip: stream.remoteAddress
             });
             break;
-            
+
+            case 'deny-user':
+            blockedUsers.push({
+                userId: req.data.id,
+                time: new Date().toUTCString(),
+                ip: stream.remoteAddress
+            });
+            break;
+
         default:
             console.log('Unknown request type: ' + req.type);
             break;

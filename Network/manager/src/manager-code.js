@@ -58,7 +58,7 @@ function handleData (buf) {
             break;
 
         case 'fraud-logs':
-            displayFraudLogs(res.data.logs);
+            displayFraudLogs(res.data.fraudLogs, res.data.blockedUsers);
             break;
 
         default:
@@ -205,8 +205,10 @@ function editUserResult (result) {
     $('#workspace').html(compiledTemplate);
 }
 
-function displayFraudLogs(logs) {
+function displayFraudLogs(fraudLogs, blockedUsers) {
     var editSuccessTemplate = $('#fraud-list-template').html();
-    var compiledTemplate = _.template(editSuccessTemplate, {clients: logs});
+    var compiledTemplate = _.template(editSuccessTemplate,
+                                      {fraudLogs: fraudLogs,
+                                       blockedUsers: blockedUsers});
     $('#workspace').html(compiledTemplate);
 }

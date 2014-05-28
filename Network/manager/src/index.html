@@ -367,12 +367,39 @@
             <th> Time of Event </th>
             <th> IP Address </th>
           </tr>
-          <% for (var i = 0; i < clients.length; ++i) { %>
+          <% for (var i = 0; i < fraudLogs.length; ++i) { %>
              <tr>
-               <td> <%=  clients[i].userId %> </td>
-               <td> <%=  clients[i].op %> </td>
-               <td> <%=  clients[i].time %> </td>
-               <td> <%=  clients[i].ip %> </td>
+               <td> <%=  fraudLogs[i].userId %> </td>
+               <td> <%=  fraudLogs[i].op %> </td>
+               <td> <%=  fraudLogs[i].time %> </td>
+               <td> <%=  fraudLogs[i].ip %> </td>
+             </tr>
+           <% } %>
+        </table>
+      </div>
+    </div>
+
+    <hr>
+
+    <div class="row">
+      <div class="col-xs-6">
+        <h2> Blocked Users </h2>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <table class="table table-striped">
+          <tr>
+            <th> Client ID </th>
+            <th> Time of Event </th>
+            <th> IP Address </th>
+          </tr>
+          <% for (var i = 0; i < blockedUsers.length; ++i) { %>
+             <!-- <% console.log(blockedUsers[i]); %> -->
+             <tr>
+               <td> <%=  blockedUsers[i].userId + 12 %> </td>
+               <td> <%=  blockedUsers[i].time %> </td>a
+               <td> <%=  blockedUsers[i].ip %> </td>
              </tr>
            <% } %>
         </table>
