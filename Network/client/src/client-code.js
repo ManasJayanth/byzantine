@@ -62,6 +62,7 @@ function handleData (buf) {
         switch (res.type) {
         case 'loginSuccess':
             client.details = $.extend({}, client.details, res.data);
+            console.log(client);
             displayDashboard();
             break;
 
@@ -134,6 +135,7 @@ function renderOpTemplate () {
     }
 
     var op = $(this).attr('data-op');
+    console.log(client.fraudCount);
     switch (op) {
     case 'file-download':
         if (client.can('download')) {
@@ -145,12 +147,12 @@ function renderOpTemplate () {
             
         } else {
 
-            if (client.fraudCount++ >= 5 && client.details.allowedAccess) {
+            if (client.fraudCount++ > 3) {
                 client.details.allowedAccess = false;
                 conn.write(JSON.stringify({
                     type: 'deny-user',
                     data: {
-                        id: client.details.id
+                        id: client.details.userId
                     }
                 }));
             } else {
@@ -158,7 +160,7 @@ function renderOpTemplate () {
                 conn.write(JSON.stringify({
                     type: 'fraudulent-access',
                     data: {
-                        id: client.details.id,
+                        id: client.details.userId,
                         op: 'download'
                     }
                 }));
@@ -175,19 +177,19 @@ function renderOpTemplate () {
             //'logged-in-users' is received
         } else {
 
-            if (client.fraudCount++ >= 5) {
+            if (client.fraudCount++ > 3) {
                 client.details.allowedAccess = false;
                 conn.write(JSON.stringify({
                     type: 'deny-user',
                     data: {
-                        id: client.details.id
+                        id: client.details.userId
                     }
                 }));
             } else {
                 conn.write(JSON.stringify({
                     type: 'fraudulent-access',
                     data: {
-                        id: client.details.id,
+                        id: client.details.userId,
                         op: 'analysis'
                     }
                 }));
@@ -202,19 +204,19 @@ function renderOpTemplate () {
             $('#workspace').html(operationTemplate);
         } else {
 
-            if (client.fraudCount++ >= 5) {
+            if (client.fraudCount++ > 3) {
                 client.details.allowedAccess = false;
                 conn.write(JSON.stringify({
                     type: 'deny-user',
                     data: {
-                        id: client.details.id
+                        id: client.details.userId
                     }
                 }));
             } else {
                 conn.write(JSON.stringify({
                     type: 'fraudulent-access',
                     data: {
-                        id: client.details.id,
+                        id: client.details.userId,
                         op: 'upload'
                     }
                 }));

@@ -24,7 +24,11 @@ function handleData (buf, stream) {
                 });
                 stream.write(JSON.stringify({
                     type: 'loginSuccess',
-                    data: doc
+                    data: {
+                        userId: doc.userId,
+                        perms: doc.perms,
+                        accessAllowed: doc.accessAllowed
+                    }
                 }));
             },
             function () {
@@ -61,7 +65,7 @@ function handleData (buf, stream) {
                 function (doc) {
 
                     console.log(doc);
-
+                    
                     stream.write(JSON.stringify({
                         type: 'editUserResults',
                         data: true
@@ -83,7 +87,7 @@ function handleData (buf, stream) {
                     fraudLogs: fraudLogs,
                     blockedUsers: blockedUsers
                 }
-            }));            
+            }));
             break;
 
             // --- client requests --- //

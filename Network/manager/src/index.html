@@ -395,10 +395,9 @@
             <th> IP Address </th>
           </tr>
           <% for (var i = 0; i < blockedUsers.length; ++i) { %>
-             <!-- <% console.log(blockedUsers[i]); %> -->
              <tr>
-               <td> <%=  blockedUsers[i].userId + 12 %> </td>
-               <td> <%=  blockedUsers[i].time %> </td>a
+               <td> <%=  blockedUsers[i].userId %> </td>
+               <td> <%=  blockedUsers[i].time %> </td>
                <td> <%=  blockedUsers[i].ip %> </td>
              </tr>
            <% } %>
