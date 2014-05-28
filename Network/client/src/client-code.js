@@ -134,97 +134,106 @@ function renderOpTemplate () {
         $('#alert-space').html(compiledTemplate);
     }
 
-    var op = $(this).attr('data-op');
-    console.log(client.fraudCount);
-    switch (op) {
-    case 'file-download':
-        if (client.can('download')) {
+
+    if (client.details.accessAllowed) {
+
+        var op = $(this).attr('data-op');
+
+        switch (op) {
+        case 'file-download':
+            if (client.can('download')) {
+                conn.write(JSON.stringify({
+                    type: 'list-files'
+                })); // template will be rendered when the response 
+                //'available-files' is received            
+            } else {
+
+                if (client.fraudCount++ > 3) {
+                    client.details.accessAllowed = false;
+                    conn.write(JSON.stringify({
+                        type: 'deny-user',
+                        data: {
+                            id: client.details.userId
+                        }
+                    }));
+                } else {
+
+                    conn.write(JSON.stringify({
+                        type: 'fraudulent-access',
+                        data: {
+                            id: client.details.userId,
+                            op: 'download'
+                        }
+                    }));
+                    alertUser('You donot have download access');
+                }
+            }
+            break;
             
-            conn.write(JSON.stringify({
-                type: 'list-files'
-            })); // template will be rendered when the response 
-            //'available-files' is received
+        case 'network-analysis':
+            if (client.can('analyse')) {
+                conn.write(JSON.stringify({
+                    type: 'list-users'
+                })); // template will be rendered when the response 
+                //'logged-in-users' is received
+            } else {
+
+                if (client.fraudCount++ > 3) {
+                    client.details.accessAllowed = false;
+                    conn.write(JSON.stringify({
+                        type: 'deny-user',
+                        data: {
+                            id: client.details.userId
+                        }
+                    }));
+                } else {
+                    conn.write(JSON.stringify({
+                        type: 'fraudulent-access',
+                        data: {
+                            id: client.details.userId,
+                            op: 'analysis'
+                        }
+                    }));
+                    alertUser('You donot have access to network analysis');
+                }
+            }
+            break;
             
-        } else {
-
-            if (client.fraudCount++ > 3) {
-                client.details.allowedAccess = false;
-                conn.write(JSON.stringify({
-                    type: 'deny-user',
-                    data: {
-                        id: client.details.userId
-                    }
-                }));
+        case 'file-upload':
+            if (client.can('upload')) {
+                var operationTemplate = $('#' + op + '-template').html();
+                $('#workspace').html(operationTemplate);
             } else {
 
-                conn.write(JSON.stringify({
-                    type: 'fraudulent-access',
-                    data: {
-                        id: client.details.userId,
-                        op: 'download'
-                    }
-                }));
-                alertUser('You donot have download access');
+                if (client.fraudCount++ > 3) {
+                    client.details.accessAllowed = false;
+                    conn.write(JSON.stringify({
+                        type: 'deny-user',
+                        data: {
+                            id: client.details.userId
+                        }
+                    }));
+                } else {
+                    conn.write(JSON.stringify({
+                        type: 'fraudulent-access',
+                        data: {
+                            id: client.details.userId,
+                            op: 'upload'
+                        }
+                    }));
+                    alertUser('You donot have upload access');
+                }
             }
+            break;
         }
-        break;
-        
-    case 'network-analysis':
-        if (client.can('analyse')) {
-            conn.write(JSON.stringify({
-                type: 'list-users'
-            })); // template will be rendered when the response 
-            //'logged-in-users' is received
-        } else {
-
-            if (client.fraudCount++ > 3) {
-                client.details.allowedAccess = false;
-                conn.write(JSON.stringify({
-                    type: 'deny-user',
-                    data: {
-                        id: client.details.userId
-                    }
-                }));
-            } else {
-                conn.write(JSON.stringify({
-                    type: 'fraudulent-access',
-                    data: {
-                        id: client.details.userId,
-                        op: 'analysis'
-                    }
-                }));
-                alertUser('You donot have access to network analysis');
-            }
-        }
-        break;
-        
-    case 'file-upload':
-        if (client.can('upload')) {
-            var operationTemplate = $('#' + op + '-template').html();
-            $('#workspace').html(operationTemplate);
-        } else {
-
-            if (client.fraudCount++ > 3) {
-                client.details.allowedAccess = false;
-                conn.write(JSON.stringify({
-                    type: 'deny-user',
-                    data: {
-                        id: client.details.userId
-                    }
-                }));
-            } else {
-                conn.write(JSON.stringify({
-                    type: 'fraudulent-access',
-                    data: {
-                        id: client.details.userId,
-                        op: 'upload'
-                    }
-                }));
-                alertUser('You donot have upload access');
-            }
-        }
-        break;
+    } else {
+        var placeHolderTemplate = $('#operation-access-denied').html();
+        var compiledTemplate = _.template(placeHolderTemplate,
+            {message: 'Your account has been blocked due to' +
+             ' fradulent activity'});
+        $('#workspace').html(compiledTemplate);
     }
+    
 }
 
 function nwUploadFile (name, path) {
