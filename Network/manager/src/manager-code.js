@@ -17,6 +17,7 @@ var conn = tls.connect(8000, config.ip, options, function() {
         $(document).on('click', '#new-user-submit', sendUserDetails);
         $(document).on('click', '#user-id-submit', sendUserID);
         $(document).on('click', '#edit-user-submit', editUserDetails);
+        $(document).on('click', '#delete-user', deleteUser);
         $(document).on('click', '#reassign-privileges-submit', editUserDetails);
         $(document).on('click', 'header div.pull-left', displayDashboard);
 
@@ -211,4 +212,13 @@ function displayFraudLogs(fraudLogs, blockedUsers) {
                                       {fraudLogs: fraudLogs,
                                        blockedUsers: blockedUsers});
     $('#workspace').html(compiledTemplate);
+}
+
+function deleteUser (event) {
+    event.preventDefault();
+
+    conn.write(JSON.stringify({
+        type: 'deleteUser',
+        data: $('#userId').val()
+    }));
 }
