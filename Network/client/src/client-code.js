@@ -99,7 +99,7 @@ function handleData (buf) {
                                           {clients: res.data});
             $('#workspace').html(compiledTemplate);
             break;
-
+        
         default:
             console.log('Unknown request type: ' + res.type);
             break;

@@ -62,6 +62,10 @@ function handleData (buf) {
             displayFraudLogs(res.data.fraudLogs, res.data.blockedUsers);
             break;
 
+        case 'deletion-successful':
+            notifyDeletion();
+            break;
+
         default:
             console.log('Unknown request type: ' + res.type);
             break;
@@ -221,4 +225,10 @@ function deleteUser (event) {
         type: 'deleteUser',
         data: $('#userId').val()
     }));
+}
+
+function notifyDeletion () {
+    var deletionSuccessTemplate = $('#deletion-successful-template')
+        .html();
+    $('#workspace').html(deletionSuccessTemplate);
 }
