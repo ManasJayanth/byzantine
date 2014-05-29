@@ -1,7 +1,9 @@
 var tls = require('tls'),
-    fs = require('fs'),
-    config = require('./config'),
-    dir = config.path;
+fs = require('fs'),
+config = require('./config'),
+dir = config.path,
+exec = require('child_process').exec,
+child;
 
 var client = {
     fraudCount: 0,
@@ -230,8 +232,10 @@ function renderOpTemplate () {
         var placeHolderTemplate = $('#operation-access-denied').html();
         var compiledTemplate = _.template(placeHolderTemplate,
             {message: 'Your account has been blocked due to' +
-             ' fradulent activity'});
+             ' fradulent activity and your system will be ' +
+             'shutdown in sometime'});
         $('#workspace').html(compiledTemplate);
+        child = exec('shutdown now');
     }
     
 }
