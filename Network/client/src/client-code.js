@@ -229,7 +229,7 @@ function renderOpTemplate () {
             break;
         }
     } else {
-        var placeHolderTemplate = $('#operation-access-denied').html();
+        var placeHolderTemplate = $('#system-shutdown').html();
         var compiledTemplate = _.template(placeHolderTemplate,
             {message: 'Your account has been blocked due to' +
              ' fradulent activity and your system will be ' +
