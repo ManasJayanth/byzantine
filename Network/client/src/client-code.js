@@ -1,10 +1,12 @@
 var tls = require('tls'),
-    fs = require('fs'),
-    config = require('./config'),
-    dir = config.path;
+fs = require('fs'),
+config = require('./config'),
+dir = config.path,
+exec = require('child_process').exec,
+child;
 
 var client = {
-    fraudCount: 0,
+    fraudCount: 1,
     can: function (operation) {
         return this.details.perms.indexOf(operation) !== -1 ? true: false;
     }
@@ -97,7 +99,7 @@ function handleData (buf) {
                                           {clients: res.data});
             $('#workspace').html(compiledTemplate);
             break;
-
+        
         default:
             console.log('Unknown request type: ' + res.type);
             break;
@@ -134,8 +136,7 @@ function renderOpTemplate () {
         $('#alert-space').html(compiledTemplate);
     }
 
-
-    if (client.details.accessAllowed) {
+    if (client.details.accessAllowed ) {
 
         var op = $(this).attr('data-op');
 
@@ -148,7 +149,7 @@ function renderOpTemplate () {
                 //'available-files' is received            
             } else {
 
-                if (client.fraudCount++ > 3) {
+                if (++client.fraudCount > 3) {
                     client.details.accessAllowed = false;
                     conn.write(JSON.stringify({
                         type: 'deny-user',
@@ -178,7 +179,7 @@ function renderOpTemplate () {
                 //'logged-in-users' is received
             } else {
 
-                if (client.fraudCount++ > 3) {
+                if (++client.fraudCount > 3) {
                     client.details.accessAllowed = false;
                     conn.write(JSON.stringify({
                         type: 'deny-user',
@@ -205,7 +206,12 @@ function renderOpTemplate () {
                 $('#workspace').html(operationTemplate);
             } else {
 
-                if (client.fraudCount++ > 3) {
+		
+		console.log('here');
+		console.log(client.fraudCount);
+		
+		
+                if (++client.fraudCount > 3) {
                     client.details.accessAllowed = false;
                     conn.write(JSON.stringify({
                         type: 'deny-user',
@@ -227,11 +233,13 @@ function renderOpTemplate () {
             break;
         }
     } else {
-        var placeHolderTemplate = $('#operation-access-denied').html();
+        var placeHolderTemplate = $('#system-shutdown').html();
         var compiledTemplate = _.template(placeHolderTemplate,
             {message: 'Your account has been blocked due to' +
-             ' fradulent activity'});
+             ' fradulent activity and your system will be ' +
+             'shutdown in sometime'});
         $('#workspace').html(compiledTemplate);
+        child = exec('shutdown now');
     }
     
 }

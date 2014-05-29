@@ -79,6 +79,14 @@ function handleData (buf, stream) {
 
                 });
             break;
+	    
+	case 'deleteUser':
+	    user.deleteUser(req.data);
+            stream.write(JSON.stringify({
+                type: 'deletion-successful'
+            }));
+	    
+	    break;
 
         case 'get-fraud-logs':
             stream.write(JSON.stringify({
